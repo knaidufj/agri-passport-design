@@ -249,32 +249,36 @@
 
 ## Implementation plan:
 
-### 1. **aatp-aca-py-agents**
-   - **Objective:** Deploy and manage ACA-PY agents to facilitate decentralized identity and credential operations, secure communication, and credential exchange between stakeholders using the DIDComm protocol.
+### 1. **aatp-core-services**
+   - **Objective:** Consolidate all core backend services and components required for the AATP system, including ACA-PY agents, API services, DID management, and optional blockchain integration.
+   - **Components Included:**
+     - ACA-PY agents for decentralized identity and credential management.
+     - Backend APIs for credential issuance, verification, revocation, and DID operations.
+     - DID management tools, compliant with W3C DID specifications (creation, resolution, updates, deactivation).
+     - Optional blockchain integration to provide an immutable ledger for DID anchoring and credential transactions.
+   - **Purpose:** To provide a comprehensive backend infrastructure that supports all decentralized identity and credential operations within the AATP system.
 
-### 2. **aatp-bifold-wallet**
-   - **Objective:** Customize and extend the Bifold Wallet to support AATP-specific use cases, enabling credential storage, selective disclosure, QR code scanning, and providing a user-friendly mobile interface for decentralized identity management.
+### 2. **aatp-mobile-app**
+   - **Objective:** Develop a customized mobile application based on the Bifold Wallet, tailored to AATP-specific use cases for managing credentials, performing selective disclosure, and scanning QR codes.
+   - **Components Included:**
+     - Customized Bifold Wallet for mobile users.
+     - QR code scanning functionality for verifying product credentials.
+     - User-friendly mobile interface for managing decentralized identities and credentials.
+   - **Purpose:** To offer a portable, easy-to-use mobile interface for stakeholders to manage their credentials and interact with the AATP system on the go.
 
-### 3. **aatp-api**
-   - **Objective:** Develop backend services and APIs to manage credential issuance, verification, revocation, and DID operations, serving as the central service layer that connects ACA-PY agents, wallets, and external systems.
+### 3. **aatp-web-app**
+   - **Objective:** Build a web-based application to enable stakeholders to interact with the AATP system from a desktop interface, manage credentials, perform verification checks, and view dashboards.
+   - **Components Included:**
+     - User interface for credential management and verification.
+     - Dashboard for monitoring issued and received credentials.
+     - Integration with the AATP core services for backend operations.
+   - **Purpose:** To provide a robust desktop interface for stakeholders to engage with the AATP system, offering functionality that complements the mobile app.
 
-### 4. **aatp-web-app**
-   - **Objective:** Build a web-based application to enable stakeholders to interact with the AATP system, manage credentials, perform verification checks, and complement the Bifold Wallet with a desktop interface.
-
-### 5. **aatp-blockchain-integration**
-   - **Objective:** Implement blockchain integration to store DIDs and credential transactions, providing an optional layer of immutability, transparency, and auditability on a decentralized ledger.
-
-### 6. **aatp-compliance-governance**
-   - **Objective:** Develop governance policies, scripts, and tools to enforce compliance, audit, and regulatory checks within the AATP system, ensuring robust management of credential issuance and verification processes.
-
-### 7. **aatp-docs-deployment**
-   - **Objective:** Provide comprehensive documentation and deployment scripts to guide the setup of the entire AATP system across different environments, ensuring efficient deployment and configuration management.
-
-### 8. **aatp-integration-testing**
-   - **Objective:** Create a suite of integration tests to validate interoperability and functionality across all AATP components, ensuring seamless integration and reliable system performance through continuous testing.
-
-### 9. **aatp-did-management**
-   - **Objective:** Manage Decentralized Identifiers (DIDs) including creation, resolution, updates, and deactivation, compliant with W3C DID specifications, to enhance interoperability and security within the AATP system.
-
-### 10. **aatp-demo-use-cases**
-	-	**Objective:** Develop a repository containing scripts, sample data, and environments to demonstrate the various use cases of the AATP system, showcasing credential issuance, verification, traceability, and compliance workflows in a practical setting.
+### 4. **aatp-compliance-testing-and-docs**
+   - **Objective:** Merge compliance tools, governance scripts, integration testing, and documentation into one repository to ensure the system meets regulatory standards, functions reliably, and provides clear guidance for deployment and use.
+   - **Components Included:**
+     - Scripts and tools for governance, compliance checks, and audit processes.
+     - Integration testing suite to validate the functionality and interoperability of all AATP components.
+     - Comprehensive documentation, including setup guides, API documentation, and user manuals.
+     - Demo scripts and sample data to showcase various use cases (credential issuance, verification, traceability, and compliance workflows).
+   - **Purpose:** To ensure regulatory adherence, reliable performance, and comprehensive guidance for deploying and using the AATP system in practical settings.
