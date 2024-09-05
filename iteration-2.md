@@ -256,7 +256,6 @@
      - Backend APIs for credential issuance, verification, revocation, and DID operations.
      - DID management tools, compliant with W3C DID specifications (creation, resolution, updates, deactivation).
      - Optional blockchain integration to provide an immutable ledger for DID anchoring and credential transactions.
-   - **Purpose:** To provide a comprehensive backend infrastructure that supports all decentralized identity and credential operations within the AATP system.
 
 ### 2. **aatp-mobile-app**
    - **Objective:** Develop a customized mobile application based on the Bifold Wallet, tailored to AATP-specific use cases for managing credentials, performing selective disclosure, and scanning QR codes.
@@ -264,7 +263,6 @@
      - Customized Bifold Wallet for mobile users.
      - QR code scanning functionality for verifying product credentials.
      - User-friendly mobile interface for managing decentralized identities and credentials.
-   - **Purpose:** To offer a portable, easy-to-use mobile interface for stakeholders to manage their credentials and interact with the AATP system on the go.
 
 ### 3. **aatp-web-app**
    - **Objective:** Build a web-based application to enable stakeholders to interact with the AATP system from a desktop interface, manage credentials, perform verification checks, and view dashboards.
@@ -272,7 +270,6 @@
      - User interface for credential management and verification.
      - Dashboard for monitoring issued and received credentials.
      - Integration with the AATP core services for backend operations.
-   - **Purpose:** To provide a robust desktop interface for stakeholders to engage with the AATP system, offering functionality that complements the mobile app.
 
 ### 4. **aatp-compliance-testing-and-docs**
    - **Objective:** Merge compliance tools, governance scripts, integration testing, and documentation into one repository to ensure the system meets regulatory standards, functions reliably, and provides clear guidance for deployment and use.
@@ -281,4 +278,3 @@
      - Integration testing suite to validate the functionality and interoperability of all AATP components.
      - Comprehensive documentation, including setup guides, API documentation, and user manuals.
      - Demo scripts and sample data to showcase various use cases (credential issuance, verification, traceability, and compliance workflows).
-   - **Purpose:** To ensure regulatory adherence, reliable performance, and comprehensive guidance for deploying and using the AATP system in practical settings.
