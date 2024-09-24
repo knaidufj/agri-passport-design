@@ -1,0 +1,15 @@
+---
+config:
+  theme: neutral
+  look: classic
+  layout: dagre
+---
+flowchart TD
+    A[Set Up ACA PY Agents for Retailer] --> B[Connect to Producer via DIDComm]
+    B --> C[Request Credential Presentation via Web App]
+    C --> D[Producer Sends Credential via Bifold Wallet]
+    D --> E[Verify Credential with AATP API]
+    E --> F{Credential Valid?}
+    F -- Yes --> G[Cache Verification Result]
+    F -- No --> H[Request Rejected]
+    G --> I[Retailer Receives Verification Result]

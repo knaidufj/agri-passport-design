@@ -1,0 +1,15 @@
+---
+config:
+  theme: neutral
+  look: classic
+  layout: dagre
+---
+flowchart TD
+    A[Set Up ACA PY Agents for Producer and Consumer] --> B[Register Product Credentials on AATP API]
+    B --> C[Generate QR Code and Attach to Product]
+    C --> D[Consumer Scans QR Code with Bifold Wallet]
+    D --> E[Request Verification via AATP API]
+    E --> F[AATP API Verifies Credentials]
+    F --> G{Credential Valid?}
+    G -- Yes --> H[Display Verification Status to Consumer]
+    G -- No --> I[Display Error Message to Consumer]

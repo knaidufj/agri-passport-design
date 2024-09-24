@@ -1,0 +1,14 @@
+---
+config:
+  theme: neutral
+  look: classic
+  layout: dagre
+---
+flowchart TD
+    A[Set Up ACA PY Agents for Credential Holder and Verifier] --> B[Establish DIDComm Connection]
+    B --> C[Holder Initiates Credential Sharing via Bifold Wallet]
+    C --> D[Send Credential via DIDComm]
+    D --> E[Verifier Verifies Credential via AATP API]
+    E --> F{Credential Valid?}
+    F -- Yes --> G[Verifier Acknowledges Receipt and Verification]
+    F -- No --> H[Reject Credential]

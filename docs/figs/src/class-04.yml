@@ -1,0 +1,13 @@
+classDiagram
+    class ComplianceService {
+        +checkCompliance(productDid: String) : String
+        +getAuditTrail(credentialId: String) : AuditTrail
+    }
+    
+    class AuditTrail {
+        +event: String
+        +timestamp: String
+        +entity: String
+    }
+    
+    ComplianceService --> AuditTrail : "Generates"

@@ -1,0 +1,15 @@
+---
+config:
+  theme: neutral
+  look: classic
+  layout: dagre
+---
+flowchart TD
+    A[Set Up ACA PY Agents for Regulator and Producer] --> B[Request Compliance Credentials via Web App]
+    B --> C[Producer Sends Credentials via Bifold Wallet]
+    C --> D[Mutual Authentication via DIDComm]
+    D --> E[Regulator Verifies Credentials via AATP API]
+    E --> F{Compliance Met?}
+    F -- Yes --> G[Generate Compliance Report]
+    F -- No --> H[Notify Non-Compliance]
+    G --> I[Notify Producer of Compliance Check Outcome]

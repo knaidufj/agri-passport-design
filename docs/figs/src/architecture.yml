@@ -1,0 +1,11 @@
+graph TD
+    subgraph CoreComponents
+        AATP_API --> ACAPY_Agents
+        AATP_API --> WebApp
+        AATP_API --> BifoldWallet
+    end
+
+    subgraph OptionalComponents
+        ExternalComplianceSystems -->|Verify Compliance| AATP_API
+        Blockchain -->|Anchor Transactions| AATP_API
+    end

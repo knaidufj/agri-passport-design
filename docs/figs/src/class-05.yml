@@ -1,0 +1,8 @@
+classDiagram
+    class RecallService {
+        +initiateRecall(productDid: String, recallReason: String) : String
+        +updateCredentialStatus(credentialId: String, status: String) : String
+    }
+    
+    RecallService --> Product : "Recalls"
+    RecallService --> Credential : "Revokes"

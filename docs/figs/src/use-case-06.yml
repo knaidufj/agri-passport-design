@@ -1,0 +1,15 @@
+---
+config:
+  theme: neutral
+  look: classic
+  layout: dagre
+---
+flowchart TD
+    A[Set Up ACA PY Agents for Issuing Authority and Stakeholders] --> B[Initiate Recall via Web Application]
+    B --> C[Update Credential Status as Revoked on AATP API]
+    C --> D[Notify Stakeholders via DIDComm]
+    D --> E{Stakeholders Acknowledge?}
+    E -- Yes --> F[Update Systems]
+    E -- No --> G[Resend Notification]
+    F --> H[AATP API Confirms Credential Revocation Status]
+    H --> I[Monitor Compliance with Recall Procedures]

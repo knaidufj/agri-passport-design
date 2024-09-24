@@ -120,12 +120,16 @@
 - **Blockchain Network (Optional):** Provides an immutable ledger for anchoring DIDs and storing credential transactions, enhancing transparency and auditability.
 - **External Compliance Systems:** Third-party systems or APIs interacting with AATP API.
 
+![architecture](figs/architecture.png)
+
 ---
 
 ## Detailed Implementation Plan for Use Cases
 
 ### Credential Issuance by Producers
 **Objective:** Allow producers to request and receive verifiable credentials (VCs) for certifications.
+
+![use-case-01](figs/use-case-01.png) 
 
 #### Implementation Steps:
 1. **Set Up ACA-PY Agents:** Deploy ACA-PY agents for both the credential issuer (e.g., certification body) and the producer.
@@ -141,6 +145,8 @@
 ### Credential Verification by Retailers
 **Objective:** Enable retailers to verify the authenticity of certifications before purchasing products.
 
+![use-case-02](figs/use-case-02.png) 
+
 #### Implementation Steps:
 1. **Set Up ACA-PY Agents:** Deploy ACA-PY agents for the retailer.
 2. **Connect to Producer:** Retailer establishes a DIDComm connection with the producer’s agent.
@@ -152,6 +158,8 @@
 
 ### Product Traceability for Consumers
 **Objective:** Allow consumers to verify product sustainability credentials via QR codes.
+
+![use-case-03](figs/use-case-03.png) 
 
 #### Implementation Steps:
 1. **Set Up ACA-PY Agents:** Deploy ACA-PY agents for both producer and consumer.
@@ -165,6 +173,8 @@
 ### Regulatory Compliance Checks
 **Objective:** Enable regulatory bodies to conduct compliance checks.
 
+![use-case-04](figs/use-case-04.png) 
+
 #### Implementation Steps:
 1. **Set Up ACA-PY Agents:** Deploy ACA-PY agents for both the regulatory body and producers.
 2. **Request Compliance Credentials:** Regulator requests compliance credentials via ACA-PY agent using the web application.
@@ -177,6 +187,8 @@
 ### Decentralized Credential Sharing
 **Objective:** Enable secure, direct sharing of credentials between stakeholders.
 
+![use-case-05](figs/use-case-05.png) 
+
 #### Implementation Steps:
 1. **Set Up ACA-PY Agents:** Deploy ACA-PY agents for both the credential holder (e.g., farmer) and the verifier (e.g., retailer).
 2. **Establish DIDComm Connection:** Secure DIDComm connection established between stakeholders using DIDComm messaging patterns (e.g., one-to-one, broadcast).
@@ -187,6 +199,8 @@
 
 ### Emergency Recall Notifications
 **Objective:** Manage product recalls and revoke related credentials.
+
+![use-case-06](figs/use-case-06.png) 
 
 #### Implementation Steps:
 1. **Set Up ACA-PY Agents:** Deploy ACA-PY agents for the issuing authority and stakeholders.

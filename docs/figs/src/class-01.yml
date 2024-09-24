@@ -1,0 +1,18 @@
+classDiagram
+    class CredentialService {
+        +issueCredential(issuerDid: String, subjectDid: String, credentialType: String, credentialData: Object) : String
+        +verifyCredential(credentialId: String) : String
+        +revokeCredential(credentialId: String, reason: String) : String
+        +updateCredential(credentialId: String, newData: Object) : String
+    }
+    
+    class Credential {
+        +credentialId: String
+        +issuerDid: String
+        +subjectDid: String
+        +credentialType: String
+        +credentialData: Object
+        +status: String
+    }
+    
+    CredentialService --> Credential : "Issues, Verifies, Revokes, Updates"

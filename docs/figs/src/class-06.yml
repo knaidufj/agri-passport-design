@@ -1,0 +1,12 @@
+classDiagram
+    class UserService {
+        +getProfile(userId: String) : UserProfile
+    }
+    
+    class UserProfile {
+        +name: String
+        +dids: List~String~
+        +credentials: List~String~
+    }
+    
+    UserService --> UserProfile : "Manages"

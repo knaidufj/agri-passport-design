@@ -1,7 +1,7 @@
 # Vision
 
 ## Product vision
-The goal of this project is to develop a prototype of the Australian Agricultural Traceability Protocol (AATP)-enabled Agri Food Product Passport, leveraging Decentralized Identity (DI) based W3C verifiable credentials and Decentralized Identifiers to enhance food security, safety, and agility in Australia, issuing and verifying credentials, establishing a DI wallet, and creating a verifiable data registry (VDR) to ensure comprehensive traceability for agricultural products.
+The goal of this project is to develop a prototype of the Australian Agricultural Traceability Protocol (AATP)-enabled Agri Food Product Passport, leveraging Decentralized Identity (DI) based W3C verifiable credentials and Decentralized Identifiers to enhance food security, safety, and agility in Australia, issuing and verifying credentials, establishing a DI wallet, and creating a verifiable data registry (VDR) to ensure comprehensive traceability for agricultural products.[1]
 
 Agri Passport is:
 - *For:* Supply chain participants, government bodies, conformity assessment bodies, academic and research community, buyers of environmental outcomes, agricultural industry bodies, and standards development organizations.

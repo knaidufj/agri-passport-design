@@ -1,0 +1,14 @@
+classDiagram
+    class ProductService {
+        +registerProduct(productDid: String, productData: Object) : String
+        +generateQRCode(productDid: String) : String
+        +verifyProduct(productDid: String) : String
+    }
+    
+    class Product {
+        +productDid: String
+        +productData: Object
+        +status: String
+    }
+    
+    ProductService --> Product : "Registers, Verifies"

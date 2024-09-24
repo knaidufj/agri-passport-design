@@ -1,0 +1,19 @@
+---
+config:
+  theme: neutral
+  look: classic
+  layout: dagre
+---
+flowchart TD
+    A[Set Up ACA PY Agents] --> B[Create DIDs for Issuer and Producer]
+    B --> C[Define Credential Schema]
+    C --> D{Producer Onboarded?}
+    D -- Yes --> E[Producer Requests Credential via Web App]
+    D -- No --> F[Onboard Producer's DID]
+    E --> G[Issuer Verifies Credential Data]
+    G --> H{Credential Valid?}
+    H -- Yes --> I[Issuer Issues Signed Credential]
+    H -- No --> J[Reject Credential Request]
+    I --> K[Credential Stored in Bifold Wallet]
+    K --> L[Producer Confirms Receipt]
+    L --> M[Revocation Process if necessary]

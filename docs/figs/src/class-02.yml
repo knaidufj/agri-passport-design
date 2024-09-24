@@ -1,0 +1,14 @@
+classDiagram
+    class DIDService {
+        +createDID(entity: String, type: String) : String
+        +resolveDID(did: String) : DIDDocument
+    }
+    
+    class DIDDocument {
+        +did: String
+        +publicKey: String
+        +authentication: String
+        +serviceEndpoint: String
+    }
+    
+    DIDService --> DIDDocument : "Manages"

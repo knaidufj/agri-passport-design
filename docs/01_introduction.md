@@ -1,7 +1,7 @@
 # Introduction
 
 ## Project Overview
-This project aims to enhance Australia's agricultural traceability initiatives to improve food security, safety, and agility. The primary goal is to design and implement a prototype of the Australian Agricultural Traceability Protocol (AATP)-enabled Agri Food Product Passport. This prototype will utilize Decentralized Identity (DI) based W3C verifiable credentials and Decentralized Identifiers, leveraging open-source tools. The system will demonstrate the capability to issue and verify product credentials, establish a DI wallet, and create a verifiable data registry (VDR). Ultimately, this project seeks to ensure food security, safety, and agility through a product passport system with conformity credentials and traceability for specific products or batch identifiers.
+This project aims to enhance Australia's agricultural traceability initiatives to improve food security, safety, and agility. The primary goal is to design and implement a prototype of the Australian Agricultural Traceability Protocol (AATP)-enabled Agri Food Product Passport [1]. This prototype will utilize Decentralized Identity (DI) based W3C verifiable credentials and Decentralized Identifiers, leveraging open-source tools. The system will demonstrate the capability to issue and verify product credentials, establish a DI wallet, and create a verifiable data registry (VDR). Ultimately, this project seeks to ensure food security, safety, and agility through a product passport system with conformity credentials and traceability for specific products or batch identifiers.
 
 The following are the client information details:
 
@@ -22,27 +22,6 @@ The following are the client information details:
 - **Email**: pashley@anonyome.com
 
 Veritas Digital along with Anonyome Labs will provide materials and advice for the project, which might be presented at the Internet Identity Workshop (IIW) in Mountain View, California.
-
-## Team Overview
-The team consists of students interested about advancing their technical and programming skills, particularly in the fields of software engineering, computer science, IT, and IS. Each team member will play a specific role in the project to ensure its successful completion.
-
-### Arpita Dhar
-Project lead and System designer, responsible for the overall system design and overseeing project progress. She ensures timely completion, coordinates with the team, and manages internal communication to address issues. 
-
-### Gaurav Singh
-API developer and Student liaison, tasked with designing and implementing the Passport and VDR API for the prototype. He demonstrates the functionality through the DI wallet and maintains project documentation.
-
-### Prathap Reddy K
-Serves as the API security analyst, ensuring API security by implementing robust protocols, conducting risk assessments, and protecting sensitive data from unauthorized access.
-
-### Sheikh Ashik Rahman Elahi
-Quality Assurance Analyst, responsible for creating comprehensive test plans that outline the testing scope, objectives, resources, and timelines. He designs and develops test cases based on software requirements and specifications to validate functionality, performance, and security. He also runs unit testing during product development and executes test cases manually or using automated testing tools to identify defects. Additionally, he generates reports on test results, defect metrics, and overall software quality to stakeholders, helping them make informed decisions.
-
-### Jins Alias
-User Experience Designer, focused on designing intuitive and user-friendly interfaces for user-facing components of the project. He tests to ensure alignment with stakeholder needs and conducts usability testing to refine the user experience. He also creates comprehensive documentation for the user interface, ensuring consistency and accessibility across the platform.
-
-### Albin Johny
-Database Administrator (DBA), ensures Data Standards and Interoperability. His role involves setting up and managing the database to store Verifiable Credentials. While the actual DIDs and credentials are managed in a decentralized manner, the database holds essential metadata such as issuance dates, expiration dates, associated entities (e.g., issuing authority), and status indicators (e.g., active, revoked). This ensures that the data within the system is consistent, reliable, and can be easily shared across different platforms and stakeholders in the supply chain. Additionally, his role includes implementing cybersecurity and data privacy measures to protect the integrity, confidentiality, and availability of the data stored in the system. This involves robust security protocols such as encryption, access control mechanisms, and regular security audits to prevent unauthorized access, data breaches, or any form of tampering.
 
 ## Definitions and Acronyms
 
