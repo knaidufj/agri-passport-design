@@ -1,0 +1,8 @@
+Week 8
+
+Develop the design iteration 2
+Meeting with client
+Consolidate the feedback from the meeting with the client
+Make changes according to the feedback
+Test VON network on Amazon Web Services
+Refine use cases and conceptualise architecture

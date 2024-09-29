@@ -1,0 +1,9 @@
+Week 9
+
+Develop the design iteration 3
+Meeting with client - Cancelled
+Consolidate the feedback from the meeting with the client
+Make changes according to the feedback
+Test VON network on local machine
+Test VON network on Digital Ocean
+Visualise the architecture and UML diagrams

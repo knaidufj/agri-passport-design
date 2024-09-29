@@ -1,0 +1,13 @@
+Week 3
+
+Get introduction from each team member and compile them - Done
+Create project description document - Done
+Identify initial questions for the client - Done
+Send email to the client with the above documents and ask for an appointment - Done
+Create GH repo - Done
+Identify resources and libraries for implementing decentralised identity and verifiable credentials - Need more info from client
+Connect with the client and discuss the questions - Scheduled on Monday 5 Aug
+Fill in the information received from the client and plan the project timeline - Yet to happen
+Complete IP documents - To be done individually - Moving this to week 4
+Complete WIL Planning - Team organisation document - Moving this to week 4
+Complete WIL Project proposal document - Finished initial draft

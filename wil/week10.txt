@@ -1,0 +1,9 @@
+Week 10
+
+Consolidate all of the documentation
+Setup Indy SDK and prerequsites on local machine
+Setup Indy SDK and prerequsites on Digital Ocean
+Develop web app wireframes
+Develop use cases flow charts
+Start implementing the ACAPY agent on local machine
+Start implementing the ACAPY agent on Digital Ocean
