@@ -5,7 +5,7 @@ import qrcode
 import os
 
 API_URL = "https://traction-sandbox-tenant-proxy.apps.silver.devops.gov.bc.ca"
-AUTH_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ3YWxsZXRfaWQiOiIyYzA4MDE0MC0yYzVkLTRkMTAtOWE0YS00NzUwZmU5YTc2ODkiLCJpYXQiOjE3Mjg5ODM0OTAsImV4cCI6MTcyOTA2OTg5MH0.8YN82ZnAvDnV8_QmCKvyK5XL_xY5TJyIjF-kC-NBojA"
+AUTH_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ3YWxsZXRfaWQiOiIyYzA4MDE0MC0yYzVkLTRkMTAtOWE0YS00NzUwZmU5YTc2ODkiLCJpYXQiOjE3MjkwODY1OTksImV4cCI6MTcyOTE3Mjk5OX0.XSo5Fn19F8xRhWk-aaMpAPjcJZ3hitLJHgmfpNY5OdQ"
 
 def send_api_call(url, method='GET', headers=None, data=None):
     curl_command = f"curl -X {method} '{url}'"
@@ -24,6 +24,19 @@ def send_api_call(url, method='GET', headers=None, data=None):
         print(f"HTTP Error occurred: {e}")
         print(f"Response content: {response.text}")
         raise
+
+def check_status(auth_token=AUTH_TOKEN, url=API_URL):
+    headers = {
+        "Authorization": f"Bearer {auth_token}",
+        "accept": "application/json"
+    }
+    
+    try:
+        response = send_api_call(f"{url}/status/ready", method='GET', headers=headers)
+        print("Status checked:\n", json.dumps(response, indent=4))
+        return response
+    except Exception as e:
+        print(f"Error checking status: {e}")
 
 def send_message(connection_id, content, auth_token=AUTH_TOKEN, url=API_URL):
     headers = {
@@ -310,6 +323,9 @@ def main():
     parser_send_message.add_argument('--connection-id', type=str, required=True, help='Connection ID to send the message to.')
     parser_send_message.add_argument('--content', type=str, required=True, help='Content of the message to send.')
 
+    # Check status sub-parser
+    parser_check_status = subparsers.add_parser('check-status', help='Check the status of the service')
+
     args = parser.parse_args()
 
     if args.interactive:
@@ -324,6 +340,7 @@ def main():
                        "8. Query Active Connections\n"
                        "9. Query Messages\n"
                        "10. Send Message\n"
+                       "11. Check Status\n"
                        "Please enter the action number: ").lower()
         
         if action == '1':
@@ -359,8 +376,10 @@ def main():
             connection_id = input("Enter connection ID to send message: ")
             content = input("Enter message content: ")
             send_message(connection_id, content, auth_token=args.auth_token, url=args.url)
+        elif action == '11':
+            check_status(auth_token=args.auth_token, url=args.url)
         else:
-            print("Invalid action. Please choose 'create-schema', 'get-schema', 'get-cred-def', 'create-cred-def', 'create-invitation', 'send-proposal', 'issue-credential', 'query-connections', 'query-messages', or 'send-message'.")
+            print("Invalid action. Please choose 'create-schema', 'get-schema', 'get-cred-def', 'create-cred-def', 'create-invitation', 'send-proposal', 'issue-credential', 'query-connections', 'query-messages', 'send-message', or 'check-status'.")
     elif args.action == 'create-schema':
         create_schema(args.schema_name, args.schema_version, args.attributes, auth_token=args.auth_token, url=args.url)
     elif args.action == 'get-schema':
@@ -381,6 +400,8 @@ def main():
         query_messages(args.connection_id, args.state, auth_token=args.auth_token, url=args.url)
     elif args.action == 'send-message':
         send_message(args.connection_id, args.content, auth_token=args.auth_token, url=args.url)
+    elif args.action == 'check-status':
+        check_status(auth_token=args.auth_token, url=args.url)
     else:
         parser.print_help()
 
@@ -407,5 +428,7 @@ if __name__ == '__main__':
 # python aatp.py query-messages --connection-id "b8cfe9d0-9a77-4974-bd1c-45ef83025dae" --state "sent"
 # Send a message
 # python aatp.py send-message --connection-id "32c6250b-a605-4313-8cb6-827e15b85151" --content "Hello"
+# Check status
+# python aatp.py check-status
 # Interactive mode
 # python aatp.py --interactive
