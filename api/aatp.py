@@ -2,6 +2,7 @@ import argparse
 import requests
 import json
 import qrcode
+import os
 
 API_URL = "https://traction-sandbox-tenant-proxy.apps.silver.devops.gov.bc.ca"
 AUTH_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ3YWxsZXRfaWQiOiIyYzA4MDE0MC0yYzVkLTRkMTAtOWE0YS00NzUwZmU5YTc2ODkiLCJpYXQiOjE3Mjg5ODM0OTAsImV4cCI6MTcyOTA2OTg5MH0.8YN82ZnAvDnV8_QmCKvyK5XL_xY5TJyIjF-kC-NBojA"
@@ -23,6 +24,22 @@ def send_api_call(url, method='GET', headers=None, data=None):
         print(f"HTTP Error occurred: {e}")
         print(f"Response content: {response.text}")
         raise
+
+def issue_credential(credential_data_path, auth_token=AUTH_TOKEN, url=API_URL):
+    headers = {
+        "Authorization": f"Bearer {auth_token}",
+        "Content-Type": "application/json"
+    }
+    
+    try:
+        with open(credential_data_path, 'r') as file:
+            credential_data = json.load(file)
+        
+        response = send_api_call(f"{url}/issue-credential-2.0/send", method='POST', headers=headers, data=credential_data)
+        print("W3C Credential requested:\n", json.dumps(response, indent=4))
+        return response
+    except Exception as e:
+        print(f"Error requesting W3C credential: {e}")
 
 # New function to send a proposal
 def send_proposal(auto_remove, comment, connection_id, credential_preview, filter, replacement_id, trace, verification_method, auth_token=AUTH_TOKEN, url=API_URL):
@@ -237,6 +254,10 @@ def main():
     parser_send_proposal.add_argument('--trace', action='store_true', help='Enable tracing for the proposal.')
     parser_send_proposal.add_argument('--verification-method', type=str, required=True, help='Verification method for the proposal.')
 
+    # Request W3C credential sub-parser
+    parser_request_w3c = subparsers.add_parser('issue-credential', help='Request a W3C credential')
+    parser_request_w3c.add_argument('--credential-data-path', type=str, required=True, help='Path to the JSON file containing the credential data.')
+
     # Query active connections sub-parser
     parser_connections = subparsers.add_parser('query-connections', help='Query active connections')
 
@@ -250,7 +271,8 @@ def main():
                        "4. Create Credential Definition\n" 
                        "5. Create Invitation\n" 
                        "6. Send Proposal\n"
-                       "7. Query Active Connections\n" 
+                       "7. Issue Credential\n"
+                       "8. Query Active Connections\n" 
                        "Please enter the action number: ").lower()
         
         if action == '1':
@@ -274,9 +296,12 @@ def main():
             verification_method = input("Enter verification method: ")
             send_proposal(auto_remove, comment, connection_id, credential_preview, filter, replacement_id, trace, verification_method, auth_token=args.auth_token, url=args.url)
         elif action == '7':
+            credential_data_path = input("Enter path to credential data JSON file: ")
+            issue_credential(credential_data_path, auth_token=args.auth_token, url=args.url)
+        elif action == '8':
             query_active_connections(auth_token=args.auth_token, url=args.url)
         else:
-            print("Invalid action. Please choose 'create-schema', 'get-schema', 'get-cred-def', 'create-cred-def', 'create-invitation', 'send-proposal', or 'query-connections'.")
+            print("Invalid action. Please choose 'create-schema', 'get-schema', 'get-cred-def', 'create-cred-def', 'create-invitation', 'send-proposal', 'issue-credential', or 'query-connections'.")
     elif args.action == 'create-schema':
         create_schema(args.schema_name, args.schema_version, args.attributes, auth_token=args.auth_token, url=args.url)
     elif args.action == 'get-schema':
@@ -289,6 +314,8 @@ def main():
         create_invitation(args.alias, args.auto_accept, args.public, args.multi_use, auth_token=args.auth_token, url=args.url)
     elif args.action == 'send-proposal':
         send_proposal(args.auto_remove, args.comment, args.connection_id, args.credential_preview, args.filter, args.replacement_id, args.trace, args.verification_method, auth_token=args.auth_token, url=args.url)
+    elif args.action == 'issue-credential':
+        issue_credential(args.credential_data_path, auth_token=args.auth_token, url=args.url)
     elif args.action == 'query-connections':
         query_active_connections(auth_token=args.auth_token, url=args.url)
     else:
@@ -309,6 +336,8 @@ if __name__ == '__main__':
 # python aatp.py create-invitation --alias "AgriProducer20" --multi-use
 # Send a proposal
 # python aatp.py send-proposal --auto-remove --comment "Proposing a membership credential" --connection-id "3fa85f64-5717-4562-b3fc-2c963f66afa6" --credential-preview '{"@type": "issue-credential/2.0/credential-preview", "attributes": [{"mime-type": "image/jpeg", "name": "favourite_drink", "value": "martini"}]}' --filter '{"indy": {"cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag", "issuer_did": "WgWxqztrNooG92RXvxSTWv", "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0", "schema_issuer_did": "WgWxqztrNooG92RXvxSTWv", "schema_name": "preferences", "schema_version": "1.0"}}' --replacement-id "3fa85f64-5717-4562-b3fc-2c963f66afa6" --trace --verification-method "string"
+# Request a W3C credential
+# python aatp.py issue-credential --credential-data-path "path/to/credential_data.json"
 # Query active connections
 # python aatp.py query-connections
 # Interactive mode

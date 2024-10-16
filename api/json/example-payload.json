@@ -1,0 +1,27 @@
+{
+    "@context": [
+      "https://www.w3.org/2018/credentials/v1",
+      "https://w3id.org/citizenship/v1"
+    ],
+    "id": "https://example.com/credentials/1872",
+    "type": ["VerifiableCredential", "PermanentResidentCard"],
+    "issuer": "did:example:123456789abcdefghi",
+    "issuanceDate": "2024-10-15T14:25:43Z",
+    "credentialSubject": {
+      "id": "did:example:abcdef1234567890",
+      "type": ["Person", "PermanentResident"],
+      "givenName": "John",
+      "familyName": "Smith",
+      "gender": "Male",
+      "identifier": "83627465",
+      "image": "data:image/jpeg;base64,...",
+      "residentSince": "2015-01-01"
+    },
+    "proof": {
+      "type": "Ed25519Signature2018",
+      "created": "2024-10-15T14:25:43Z",
+      "proofPurpose": "assertionMethod",
+      "verificationMethod": "https://example.com/keys/issuer-key",
+      "jws": "eyJhbGciOiJFZERTQSJ9..J9NV5kTxKs5-wHM8v-jLh5vMZQlZ8gd-fpzAQhZLqW7hxMCXyA"
+    }
+}
