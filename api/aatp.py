@@ -42,6 +42,32 @@ def create_schema(schema_name, schema_version, attributes, auth_token=AUTH_TOKEN
     except Exception as e:
         print(f"Error creating schema: {e}")
 
+def get_schema(schema_id, auth_token=AUTH_TOKEN, url=API_URL):
+    headers = {
+        "Authorization": f"Bearer {auth_token}",
+        "accept": "application/json"
+    }
+    
+    try:
+        response = send_api_call(f"{url}/schemas/{schema_id}", method='GET', headers=headers)
+        print("Schema retrieved:\n", json.dumps(response, indent=4))
+        return response
+    except Exception as e:
+        print(f"Error retrieving schema: {e}")
+
+def get_credential_definition(credential_definition_id, auth_token=AUTH_TOKEN, url=API_URL):
+    headers = {
+        "Authorization": f"Bearer {auth_token}",
+        "accept": "application/json"
+    }
+    
+    try:
+        response = send_api_call(f"{url}/credential-definitions/{credential_definition_id}", method='GET', headers=headers)
+        print("Credential definition retrieved:\n", json.dumps(response, indent=4))
+        return response
+    except Exception as e:
+        print(f"Error retrieving credential definition: {e}")
+
 def create_credential_definition(schema_id, tag, support_revocation=False, auth_token=AUTH_TOKEN, url=API_URL):
     headers = {
         "Authorization": f"Bearer {auth_token}",
@@ -97,12 +123,33 @@ def create_invitation(alias, auto_accept=True, public=False, multi_use=True, aut
     except Exception as e:
         print(f"Error creating connection invitation: {e}")
 
+def query_active_connections(auth_token=AUTH_TOKEN, url=API_URL):
+    headers = {
+        "Authorization": f"Bearer {auth_token}",
+        "Content-Type": "application/json"
+    }
+    
+    try:
+        response = send_api_call(f"{url}/connections", method='GET', headers=headers)
+        print("Active connections:\n", json.dumps(response, indent=4))
+        return response
+    except Exception as e:
+        print(f"Error querying active connections: {e}")
+
 def interactive_create_schema():
     schema_name = input("Enter schema name: ")
     schema_version = input("Enter schema version: ")
     attributes = input("Enter attributes (comma-separated): ").split(',')
     attributes = [attr.strip() for attr in attributes]
     create_schema(schema_name, schema_version, attributes)
+
+def interactive_get_schema():
+    schema_id = input("Enter schema ID to retrieve: ")
+    get_schema(schema_id)
+
+def interactive_get_credential_definition():
+    credential_definition_id = input("Enter credential definition ID to retrieve: ")
+    get_credential_definition(credential_definition_id)
 
 def interactive_create_credential_definition():
     schema_id = input("Enter schema ID: ")
@@ -134,6 +181,14 @@ def main():
     parser_schema.add_argument('--schema-version', type=str, required=True, help='Version of the schema to create.')
     parser_schema.add_argument('--attributes', type=str, nargs='+', required=True, help='List of attributes for the schema.')
 
+    # Get schema sub-parser
+    parser_get_schema = subparsers.add_parser('get-schema', help='Retrieve an existing schema')
+    parser_get_schema.add_argument('--schema-id', type=str, required=True, help='ID of the schema to retrieve.')
+
+    # Get credential definition sub-parser
+    parser_get_cred_def = subparsers.add_parser('get-cred-def', help='Retrieve an existing credential definition')
+    parser_get_cred_def.add_argument('--credential-definition-id', type=str, required=True, help='ID of the credential definition to retrieve.')
+
     # Create credential definition sub-parser
     parser_cred_def = subparsers.add_parser('create-cred-def', help='Create a new credential definition')
     parser_cred_def.add_argument('--schema-id', type=str, required=True, help='Schema ID for creating credential definition.')
@@ -147,24 +202,47 @@ def main():
     parser_invitation.add_argument('--public', action='store_true', help='Make the invitation public.')
     parser_invitation.add_argument('--multi-use', action='store_true', help='Allow multiple use of the invitation.')
 
+    # Query active connections sub-parser
+    parser_connections = subparsers.add_parser('query-connections', help='Query active connections')
+
     args = parser.parse_args()
 
     if args.interactive:
-        action = input("Choose action (create-schema/create-cred-def/create-invitation): ").lower()
-        if action == 'create-schema':
+        action = input("\nChoose an action:\n" 
+                       "1. Create Schema\n" 
+                       "2. Get Schema\n" 
+                       "3. Get Credential Definition\n"
+                       "4. Create Credential Definition\n" 
+                       "5. Create Invitation\n" 
+                       "6. Query Active Connections\n" 
+                       "Please enter the action number: ").lower()
+        
+        if action == '1':
             interactive_create_schema()
-        elif action == 'create-cred-def':
+        elif action == '2':
+            interactive_get_schema()
+        elif action == '3':
+            interactive_get_credential_definition()
+        elif action == '4':
             interactive_create_credential_definition()
-        elif action == 'create-invitation':
+        elif action == '5':
             interactive_create_invitation()
+        elif action == '6':
+            query_active_connections(auth_token=args.auth_token, url=args.url)
         else:
-            print("Invalid action. Please choose 'create-schema', 'create-cred-def', or 'create-invitation'.")
+            print("Invalid action. Please choose 'create-schema', 'get-schema', 'get-cred-def', 'create-cred-def', 'create-invitation', or 'query-connections'.")
     elif args.action == 'create-schema':
         create_schema(args.schema_name, args.schema_version, args.attributes, auth_token=args.auth_token, url=args.url)
+    elif args.action == 'get-schema':
+        get_schema(args.schema_id, auth_token=args.auth_token, url=args.url)
+    elif args.action == 'get-cred-def':
+        get_credential_definition(args.credential_definition_id, auth_token=args.auth_token, url=args.url)
     elif args.action == 'create-cred-def':
         create_credential_definition(args.schema_id, args.tag, args.support_revocation, auth_token=args.auth_token, url=args.url)
     elif args.action == 'create-invitation':
         create_invitation(args.alias, args.auto_accept, args.public, args.multi_use, auth_token=args.auth_token, url=args.url)
+    elif args.action == 'query-connections':
+        query_active_connections(auth_token=args.auth_token, url=args.url)
     else:
         parser.print_help()
 
@@ -173,9 +251,15 @@ if __name__ == '__main__':
 
 # Create a schema
 # python aatp.py create-schema --schema-name "agri_producer" --schema-version "2.0" --attributes "producer_name" "producer_id" "location" "certification_status" "contact_info"
+# Get a schema
+# python aatp.py get-schema --schema-id "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0"
+# Get a credential definition
+# python aatp.py get-cred-def --credential-definition-id "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag"
 # Create a credential definition
 # python aatp.py create-cred-def --schema-id "VDbghfvE6dGvgA5dK9p1DC:2:agri_producer:1.0" --tag "AgriProducer4"
 # Create an invitation
 # python aatp.py create-invitation --alias "AgriProducer20" --multi-use
+# Query active connections
+# python aatp.py query-connections
 # Interactive mode
 # python aatp.py --interactive
