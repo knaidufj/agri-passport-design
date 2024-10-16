@@ -25,6 +25,36 @@ def send_api_call(url, method='GET', headers=None, data=None):
         print(f"Response content: {response.text}")
         raise
 
+def send_message(connection_id, content, auth_token=AUTH_TOKEN, url=API_URL):
+    headers = {
+        "Authorization": f"Bearer {auth_token}",
+        "Content-Type": "application/json",
+        "accept": "application/json"
+    }
+    data = {
+        "content": content
+    }
+    
+    try:
+        response = send_api_call(f"{url}/connections/{connection_id}/send-message", method='POST', headers=headers, data=data)
+        print("Message sent:\n", json.dumps(response, indent=4))
+        return response
+    except Exception as e:
+        print(f"Error sending message: {e}")
+
+def query_messages(connection_id, state='sent', auth_token=AUTH_TOKEN, url=API_URL):
+    headers = {
+        "Authorization": f"Bearer {auth_token}",
+        "accept": "application/json"
+    }
+    
+    try:
+        response = send_api_call(f"{url}/basicmessages?connection_id={connection_id}&state={state}", method='GET', headers=headers)
+        print("Messages retrieved:\n", json.dumps(response, indent=4))
+        return response
+    except Exception as e:
+        print(f"Error querying messages: {e}")
+
 def issue_credential(credential_data_path, auth_token=AUTH_TOKEN, url=API_URL):
     headers = {
         "Authorization": f"Bearer {auth_token}",
@@ -41,7 +71,6 @@ def issue_credential(credential_data_path, auth_token=AUTH_TOKEN, url=API_URL):
     except Exception as e:
         print(f"Error requesting W3C credential: {e}")
 
-# New function to send a proposal
 def send_proposal(auto_remove, comment, connection_id, credential_preview, filter, replacement_id, trace, verification_method, auth_token=AUTH_TOKEN, url=API_URL):
     headers = {
         "Authorization": f"Bearer {auth_token}",
@@ -205,6 +234,16 @@ def interactive_create_invitation():
     multi_use = input("Allow multiple use of invitation? (true/false): ").lower() == 'true'
     create_invitation(alias, auto_accept, public, multi_use)
 
+def interactive_send_message():
+    connection_id = input("Enter connection ID to send message: ")
+    content = input("Enter message content: ")
+    send_message(connection_id, content)
+
+def interactive_query_messages():
+    connection_id = input("Enter connection ID to query messages: ")
+    state = input("Enter message state (sent/received): ")
+    query_messages(connection_id, state)
+
 def main():
     parser = argparse.ArgumentParser(description='A command line utility for demonstrating Australian Agricultural Traceability Protocol.')
     
@@ -261,6 +300,16 @@ def main():
     # Query active connections sub-parser
     parser_connections = subparsers.add_parser('query-connections', help='Query active connections')
 
+    # Query messages sub-parser
+    parser_query_messages = subparsers.add_parser('query-messages', help='Query messages for a specific connection')
+    parser_query_messages.add_argument('--connection-id', type=str, required=True, help='Connection ID to query messages for.')
+    parser_query_messages.add_argument('--state', type=str, default='sent', help='State of messages to query (sent/received).')
+
+    # Send message sub-parser
+    parser_send_message = subparsers.add_parser('send-message', help='Send a message to a specific connection')
+    parser_send_message.add_argument('--connection-id', type=str, required=True, help='Connection ID to send the message to.')
+    parser_send_message.add_argument('--content', type=str, required=True, help='Content of the message to send.')
+
     args = parser.parse_args()
 
     if args.interactive:
@@ -272,7 +321,9 @@ def main():
                        "5. Create Invitation\n" 
                        "6. Send Proposal\n"
                        "7. Issue Credential\n"
-                       "8. Query Active Connections\n" 
+                       "8. Query Active Connections\n"
+                       "9. Query Messages\n"
+                       "10. Send Message\n"
                        "Please enter the action number: ").lower()
         
         if action == '1':
@@ -300,8 +351,16 @@ def main():
             issue_credential(credential_data_path, auth_token=args.auth_token, url=args.url)
         elif action == '8':
             query_active_connections(auth_token=args.auth_token, url=args.url)
+        elif action == '9':
+            connection_id = input("Enter connection ID to query messages: ")
+            state = input("Enter message state (sent/received): ")
+            query_messages(connection_id, state, auth_token=args.auth_token, url=args.url)
+        elif action == '10':
+            connection_id = input("Enter connection ID to send message: ")
+            content = input("Enter message content: ")
+            send_message(connection_id, content, auth_token=args.auth_token, url=args.url)
         else:
-            print("Invalid action. Please choose 'create-schema', 'get-schema', 'get-cred-def', 'create-cred-def', 'create-invitation', 'send-proposal', 'issue-credential', or 'query-connections'.")
+            print("Invalid action. Please choose 'create-schema', 'get-schema', 'get-cred-def', 'create-cred-def', 'create-invitation', 'send-proposal', 'issue-credential', 'query-connections', 'query-messages', or 'send-message'.")
     elif args.action == 'create-schema':
         create_schema(args.schema_name, args.schema_version, args.attributes, auth_token=args.auth_token, url=args.url)
     elif args.action == 'get-schema':
@@ -318,6 +377,10 @@ def main():
         issue_credential(args.credential_data_path, auth_token=args.auth_token, url=args.url)
     elif args.action == 'query-connections':
         query_active_connections(auth_token=args.auth_token, url=args.url)
+    elif args.action == 'query-messages':
+        query_messages(args.connection_id, args.state, auth_token=args.auth_token, url=args.url)
+    elif args.action == 'send-message':
+        send_message(args.connection_id, args.content, auth_token=args.auth_token, url=args.url)
     else:
         parser.print_help()
 
@@ -340,5 +403,9 @@ if __name__ == '__main__':
 # python aatp.py issue-credential --credential-data-path "path/to/credential_data.json"
 # Query active connections
 # python aatp.py query-connections
+# Query messages
+# python aatp.py query-messages --connection-id "b8cfe9d0-9a77-4974-bd1c-45ef83025dae" --state "sent"
+# Send a message
+# python aatp.py send-message --connection-id "32c6250b-a605-4313-8cb6-827e15b85151" --content "Hello"
 # Interactive mode
 # python aatp.py --interactive

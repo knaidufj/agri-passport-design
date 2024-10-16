@@ -1,0 +1,26 @@
+{
+  "connection_id": "32c6250b-a605-4313-8cb6-827e15b85151",
+  "credential_preview": {
+    "@type": "issue-credential/2.0/credential-preview",
+    "attributes": [
+      {
+        "name": "name",
+        "value": "John Smith"
+      },
+      {
+        "name": "address",
+        "value": "123 Main St, Anytown, USA"
+      }
+    ]
+  },
+  "filter": {
+    "indy": {
+      "cred_def_id": "13ZM7KEfAzLC12q1R1SiTS:3:CL:2299483:Farmer1.0",
+      "issuer_did": "13ZM7KEfAzLC12q1R1SiTS",
+      "schema_id": "13ZM7KEfAzLC12q1R1SiTS:2:Farmer:1.0",
+      "schema_name": "Farmer",
+      "schema_version": "1.0"
+    }
+  },
+  "trace": true
+}
