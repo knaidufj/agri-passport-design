@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Transportation</title>
+</head>
+<body>
+    <h1>Create New Transportation</h1>
+    <form method="POST">
+        <label for="connection_id">Connection ID:</label>
+        <input type="text" id="connection_id" name="connection_id" value="f5f80243-cce2-4e90-9193-e8c039620e05" required><br><br>
+            
+        <label for="product_id">Product ID:</label>
+        <input type="text" id="product_id" name="product_id" required><br><br>
+
+        <label for="origin_location">Origin Location:</label>
+        <input type="text" id="origin_location" name="origin_location" required><br><br>
+
+        <label for="destination_location">Destination Location:</label>
+        <input type="text" id="destination_location" name="destination_location" required><br><br>
+
+        <label for="shipment_date">Shipment Date:</label>
+        <input type="text" id="shipment_date" name="shipment_date" value="dd-mm-yyyy" required><br><br>
+
+        <label for="transport_conditions">Transport Conditions:</label>
+        <input type="text" id="transport_conditions" name="transport_conditions" required><br><br>
+
+        <input type="submit" value="Create New Transportation">
+    </form>
+</body>
+</html>
