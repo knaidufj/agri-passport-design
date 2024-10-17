@@ -181,6 +181,55 @@ def api_new_producer():
         return jsonify(result)
     return render_template('new_producer.html')
 
+
+@app.route('/new-certification', methods=['GET', 'POST'])
+def api_new_certification():
+    if request.method == 'POST':
+        data = request.form
+        credential_data = {
+            "connection_id": data['connection_id'],
+            "credential_preview": {
+                "@type": "issue-credential/2.0/credential-preview",
+                "attributes": [
+                    {
+                        "name": "certification_id",
+                        "value": str(hashlib.sha256(data['producer_id'].encode()).hexdigest())[:6]
+                    },
+                    {
+                        "name": "producer_id",
+                        "value": data['producer_id']
+                    },
+                    {
+                        "name": "certification_date",
+                        "value": data['certification_date']
+                    },
+                    {
+                        "name": "certification_authority_id",
+                        "value": data['certification_authority_id']
+                    },
+                    {
+                        "name": "certification_status",
+                        "value": "Active"
+                    }
+                ]
+            },
+            "filter": {
+                "indy": {
+                    "cred_def_id": "13ZM7KEfAzLC12q1R1SiTS:3:CL:2308259:Certification",
+                    "issuer_did": "13ZM7KEfAzLC12q1R1SiTS",
+                    "schema_id": "13ZM7KEfAzLC12q1R1SiTS:2:AATP_CertificationSchema:1.0",
+                    "schema_name": "AATP_CertificationSchema",
+                    "schema_version": "1.0"
+                }
+            },
+            "trace": True
+        }
+        # Convert credential_data to JSON string
+        credential_data_json = json.dumps(credential_data)  
+        result = issue_credential(credential_data_json, auth_token=AUTH_TOKEN, url=API_URL)
+        return jsonify(result)
+    return render_template('new_certification.html')
+
 @app.route('/query-connections', methods=['GET'])
 def api_query_connections():
     result = query_active_connections(auth_token=AUTH_TOKEN, url=API_URL)

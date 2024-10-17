@@ -78,4 +78,12 @@
   "attributes": ["recall_id", "recall_reason", "affected_product_id", "recall_date", "issuer_id"]
 }
 ```
+
+## 10. AATP_CertificationSchema
+
+```json
+{
+  "schema_name": "AATP_CertificationSchema",
+  "attributes": ["certification_id", "producer_id", "certification_date", "certification_authority_id", "certification_status"]
+}
 ```

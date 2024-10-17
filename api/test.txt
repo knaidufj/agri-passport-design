@@ -8,6 +8,7 @@ Schema IDs:
 - 13ZM7KEfAzLC12q1R1SiTS:2:AATP_PackagingSchema:1.0
 - 13ZM7KEfAzLC12q1R1SiTS:2:AATP_TransportationSchema:1.0
 - 13ZM7KEfAzLC12q1R1SiTS:2:AATP_RecallSchema:1.0
+- 13ZM7KEfAzLC12q1R1SiTS:2:AATP_CertificationSchema:1.0
 
 Credential Definition IDs:
 - 13ZM7KEfAzLC12q1R1SiTS:3:CL:2308153:User
@@ -19,6 +20,7 @@ Credential Definition IDs:
 - 13ZM7KEfAzLC12q1R1SiTS:3:CL:2308161:Transportation
 - 13ZM7KEfAzLC12q1R1SiTS:3:CL:2308162:Recall
 - 13ZM7KEfAzLC12q1R1SiTS:3:CL:2308158:Consumer
+- 13ZM7KEfAzLC12q1R1SiTS:3:CL:2308259:Certification
 
 Sequence 1: Issue credential to producer
 - Producer downloads Wallet app
@@ -29,5 +31,9 @@ Sequence 1: Issue credential to producer
 - AATP_Tenant issues a Producer credential to Producer
 - Producer stores both credentials in Wallet
 
-Sequence 2: Get a 
+Sequence 2: Onsite inspection
+- Producer requests a Certification credential from AATP_Tenant at 127.0.0.1:5000/new-certification (Use connection ID: f5f80243-cce2-4e90-9193-e8c039620e05)
+- AATP_Tenant issues a Certification credential to Producer
+
+Sequence 3: 
 
