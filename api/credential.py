@@ -49,6 +49,23 @@ def issue_credential(credential_data_json, auth_token=AUTH_TOKEN, url=API_URL):
     except Exception as e:
         print(f"Error requesting W3C credential: {e}")
 
+def fetch_credential_records(connection_id, auth_token=AUTH_TOKEN, url=API_URL):
+    headers = {
+        "Authorization": f"Bearer {auth_token}",
+        "accept": "application/json"
+    }
+    
+    try:
+        response = send_api_call(f"{url}/issue-credential-2.0/records?connection_id={connection_id}", method='GET', headers=headers)
+        print("Credential records retrieved:\n", json.dumps(response, indent=4))
+        return response
+    except Exception as e:
+        print(f"Error retrieving credential records: {e}")
+
+def interactive_fetch_credential_records():
+    connection_id = input("Enter connection ID to fetch credential records: ")
+    fetch_credential_records(connection_id)
+
 def interactive_issue_credential():
     credential_data_path = input("Enter path to credential data file: ")
     

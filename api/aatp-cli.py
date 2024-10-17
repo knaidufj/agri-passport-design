@@ -24,6 +24,8 @@ from credential import (
     interactive_create_credential_definition,
     interactive_issue_credential,
     interactive_send_proposal,
+    fetch_credential_records,
+    interactive_fetch_credential_records,
 )
 from messages import (
     send_message,
@@ -187,6 +189,17 @@ def main():
         help="JSON string containing the credential data.",
     )
 
+    # Fetch credential records sub-parser
+    parser_fetch_cred_records = subparsers.add_parser(
+        "fetch-cred-records", help="Fetch credential records for a connection"
+    )
+    parser_fetch_cred_records.add_argument(
+        "--connection-id",
+        type=str,
+        required=True,
+        help="Connection ID to fetch credential records for.",
+    )
+
     # Query active connections sub-parser
     parser_connections = subparsers.add_parser(
         "query-connections", help="Query active connections"
@@ -242,6 +255,7 @@ def main():
         "9": interactive_query_messages,
         "10": interactive_send_message,
         "11": interactive_check_status,
+        "12": interactive_fetch_credential_records,
     }
 
     if args.interactive:
@@ -258,6 +272,7 @@ def main():
             "9. Query Messages\n"
             "10. Send Message\n"
             "11. Check Status\n"
+            "12. Fetch Credential Records\n"
             "Please enter the action number: "
         ).lower()
 
@@ -266,7 +281,7 @@ def main():
             action_function()
         else:
             print(
-                "Invalid action. Please choose 'create-schema', 'get-schema', 'get-cred-def', 'create-cred-def', 'create-invitation', 'send-proposal', 'issue-credential', 'query-connections', 'query-messages', 'send-message', or 'check-status'."
+                "Invalid action. Please choose 'create-schema', 'get-schema', 'get-cred-def', 'create-cred-def', 'create-invitation', 'send-proposal', 'issue-credential', 'query-connections', 'query-messages', 'send-message', 'check-status', or 'fetch-cred-records'."
             )
     else:
         action_map = {
@@ -312,6 +327,9 @@ def main():
             ),
             "issue-credential": lambda: issue_credential(
                 args.credential_data, auth_token=args.auth_token, url=args.url
+            ),
+            "fetch-cred-records": lambda: fetch_credential_records(
+                args.connection_id, auth_token=args.auth_token, url=args.url
             ),
             "query-connections": lambda: query_active_connections(
                 auth_token=args.auth_token, url=args.url

@@ -29,5 +29,5 @@ Sequence 1: Issue credential to producer
 - AATP_Tenant issues a Producer credential to Producer
 - Producer stores both credentials in Wallet
 
-Sequence 2: 
+Sequence 2: Get a 
 

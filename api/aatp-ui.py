@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify, render_template
 from config import AUTH_TOKEN, API_URL
 from schema import create_schema, get_schema
 from connections import create_invitation, query_active_connections
-from credential import get_credential_definition, create_credential_definition, issue_credential, send_proposal
+from credential import get_credential_definition, create_credential_definition, issue_credential, send_proposal, fetch_credential_records
 from messages import send_message, query_messages
 from server import check_status
 import json
@@ -211,5 +211,28 @@ def api_check_status():
     result = check_status(auth_token=AUTH_TOKEN, url=API_URL)
     return jsonify(result)
 
+@app.route('/fetch-credential-records', methods=['GET', 'POST'])
+def api_fetch_credential_records():
+    credentials = []  # Initialize an empty list to avoid 'NoneType' errors
+    if request.method == 'POST':
+        data = request.form
+        credentials = fetch_credential_records(data['connection_id'], auth_token=AUTH_TOKEN, url=API_URL)
+
+        # Format credentials as needed for rendering
+        credentials = credentials["results"]
+        result = []
+        if credentials:
+            for credential in credentials:
+                cred_ex_record = credential["cred_ex_record"]
+                result.append({
+                    "cred_ex_id": cred_ex_record["cred_ex_id"],
+                    "created_at": cred_ex_record["created_at"],
+                    "cred_preview": cred_ex_record["cred_preview"]["attributes"],
+                    "cred_name": cred_ex_record["by_format"]["cred_offer"]["indy"]["cred_def_id"].split(':')[-1]
+                })
+
+        return render_template('fetch_credential_records.html', credentials=result)
+
+    return render_template('fetch_credential_records.html', credentials=credentials)
 if __name__ == '__main__':
     app.run(debug=True)
