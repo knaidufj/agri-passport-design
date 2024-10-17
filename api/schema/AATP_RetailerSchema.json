@@ -1,0 +1,4 @@
+{
+  "schema_name": "AATP_RetailerSchema",
+  "attributes": ["retailer_id", "user_id", "store_location"]
+}

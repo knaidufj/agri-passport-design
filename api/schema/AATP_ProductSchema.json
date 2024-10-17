@@ -1,0 +1,4 @@
+{
+  "schema_name": "AATP_ProductSchema",
+  "attributes": ["product_id", "product_name", "producer_id", "production_date", "expiration_date"]
+}

@@ -1,0 +1,4 @@
+{
+  "schema_name": "AATP_RecallSchema",
+  "attributes": ["recall_id", "recall_reason", "affected_product_id", "recall_date", "issuer_id"]
+}

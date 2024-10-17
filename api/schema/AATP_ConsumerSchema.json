@@ -1,0 +1,4 @@
+{
+  "schema_name": "AATP_ConsumerSchema",
+  "attributes": ["consumer_id", "user_id"]
+}

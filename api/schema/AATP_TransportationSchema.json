@@ -1,0 +1,4 @@
+{
+  "schema_name": "AATP_TransportationSchema",
+  "attributes": ["shipment_id", "product_id", "origin_location", "destination_location", "shipment_date", "transport_conditions"]
+}

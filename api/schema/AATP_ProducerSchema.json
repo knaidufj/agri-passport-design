@@ -1,0 +1,4 @@
+{
+  "schema_name": "AATP_ProducerSchema",
+  "attributes": ["producer_id", "user_id", "organization_type"]
+}

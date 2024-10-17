@@ -20,11 +20,22 @@ app = Flask(__name__)
 
 @app.route("/")
 def index():
+    """Render the index page."""
     return render_template("index.html")
 
 
 @app.route("/create-schema", methods=["GET", "POST"])
 def api_create_schema():
+    """
+    Create a new schema.
+
+    If the request method is POST, it processes the form data to create a schema
+    and returns the result as JSON. If the request method is GET, it renders
+    the create schema page.
+
+    Returns:
+        JSON response with the result of schema creation or renders the create schema page.
+    """
     if request.method == "POST":
         data = request.form
         result = create_schema(
@@ -40,6 +51,16 @@ def api_create_schema():
 
 @app.route("/get-schema", methods=["GET", "POST"])
 def api_get_schema():
+    """
+    Retrieve a schema by its ID.
+
+    If the request method is GET, it fetches the schema using the provided schema ID
+    and returns the result as JSON. If the request method is POST, it renders the
+    get schema page.
+
+    Returns:
+        JSON response with the schema details or renders the get schema page.
+    """
     if request.method == "GET":
         schema_id = request.args.get("schema_id")
         result = get_schema(schema_id, auth_token=AUTH_TOKEN, url=API_URL)
@@ -49,6 +70,16 @@ def api_get_schema():
 
 @app.route("/get-cred-def", methods=["GET", "POST"])
 def api_get_cred_def():
+    """
+    Retrieve a credential definition by its ID.
+
+    If the request method is GET, it fetches the credential definition using the provided
+    credential definition ID and returns the result as JSON. If the request method is POST,
+    it renders the get credential definition page.
+
+    Returns:
+        JSON response with the credential definition details or renders the get credential definition page.
+    """
     if request.method == "GET":
         cred_def_id = request.args.get("credential_definition_id")
         result = get_credential_definition(
@@ -60,6 +91,16 @@ def api_get_cred_def():
 
 @app.route("/create-cred-def", methods=["GET", "POST"])
 def api_create_cred_def():
+    """
+    Create a new credential definition.
+
+    If the request method is POST, it processes the form data to create a credential
+    definition and returns the result as JSON. If the request method is GET, it renders
+    the create credential definition page.
+
+    Returns:
+        JSON response with the result of credential definition creation or renders the create credential definition page.
+    """
     if request.method == "POST":
         data = request.form
         result = create_credential_definition(
@@ -75,6 +116,16 @@ def api_create_cred_def():
 
 @app.route("/create-invitation", methods=["GET", "POST"])
 def api_create_invitation():
+    """
+    Create a new invitation.
+
+    If the request method is POST, it processes the form data to create an invitation
+    and returns the result as JSON. If the request method is GET, it renders the create
+    invitation page.
+
+    Returns:
+        JSON response with the result of invitation creation or renders the create invitation page.
+    """
     if request.method == "POST":
         data = request.form
         result = create_invitation(
@@ -91,6 +142,16 @@ def api_create_invitation():
 
 @app.route("/send-proposal", methods=["GET", "POST"])
 def api_send_proposal():
+    """
+    Send a proposal.
+
+    If the request method is POST, it processes the form data to send a proposal
+    and returns the result as JSON. If the request method is GET, it renders the
+    send proposal page.
+
+    Returns:
+        JSON response with the result of the proposal sending or renders the send proposal page.
+    """
     if request.method == "POST":
         data = request.form
         result = send_proposal(
@@ -111,6 +172,16 @@ def api_send_proposal():
 
 @app.route("/issue-credential", methods=["GET", "POST"])
 def api_issue_credential():
+    """
+    Issue a new credential.
+
+    If the request method is POST, it processes the form data to issue a credential
+    and returns the result as JSON. If the request method is GET, it renders the
+    issue credential page.
+
+    Returns:
+        JSON response with the result of credential issuance or renders the issue credential page.
+    """
     if request.method == "POST":
         data = request.form
         result = issue_credential(
@@ -122,6 +193,16 @@ def api_issue_credential():
 
 @app.route("/new-user", methods=["GET", "POST"])
 def api_new_user():
+    """
+    Create a new user credential.
+
+    If the request method is POST, it processes the form data to create a new user
+    credential and returns the result as JSON. If the request method is GET, it renders
+    the new user page.
+
+    Returns:
+        JSON response with the result of user credential creation or renders the new user page.
+    """
     if request.method == "POST":
         data = request.form
         credential_data = {
@@ -161,6 +242,16 @@ def api_new_user():
 
 @app.route("/new-producer", methods=["GET", "POST"])
 def api_new_producer():
+    """
+    Create a new producer credential.
+
+    If the request method is POST, it processes the form data to create a new producer
+    credential and returns the result as JSON. If the request method is GET, it renders
+    the new producer page.
+
+    Returns:
+        JSON response with the result of producer credential creation or renders the new producer page.
+    """
     if request.method == "POST":
         data = request.form
         credential_data = {
@@ -200,6 +291,16 @@ def api_new_producer():
 
 @app.route("/new-certification", methods=["GET", "POST"])
 def api_new_certification():
+    """
+    Create a new certification credential.
+
+    If the request method is POST, it processes the form data to create a new certification
+    credential and returns the result as JSON. If the request method is GET, it renders
+    the new certification page.
+
+    Returns:
+        JSON response with the result of certification credential creation or renders the new certification page.
+    """
     if request.method == "POST":
         data = request.form
         credential_data = {
@@ -251,6 +352,16 @@ def api_new_certification():
 
 @app.route("/new-product", methods=["GET", "POST"])
 def api_new_product():
+    """
+    Create a new product credential.
+
+    If the request method is POST, it processes the form data to create a new product
+    credential and returns the result as JSON. If the request method is GET, it renders
+    the new product page.
+
+    Returns:
+        JSON response with the result of product credential creation or renders the new product page.
+    """
     if request.method == "POST":
         data = request.form
         credential_data = {
@@ -297,6 +408,16 @@ def api_new_product():
 
 @app.route("/new-packaging", methods=["GET", "POST"])
 def api_new_packaging():
+    """
+    Create a new packaging credential.
+
+    If the request method is POST, it processes the form data to create a new packaging
+    credential and returns the result as JSON. If the request method is GET, it renders
+    the new packaging page.
+
+    Returns:
+        JSON response with the result of packaging credential creation or renders the new packaging page.
+    """
     if request.method == "POST":
         data = request.form
         credential_data = {
@@ -350,6 +471,16 @@ def api_new_packaging():
 
 @app.route("/new-transportation", methods=["GET", "POST"])
 def api_new_transportation():
+    """
+    Create a new transportation credential.
+
+    If the request method is POST, it processes the form data to create a new transportation
+    credential and returns the result as JSON. If the request method is GET, it renders
+    the new transportation page.
+
+    Returns:
+        JSON response with the result of transportation credential creation or renders the new transportation page.
+    """
     if request.method == "POST":
         data = request.form
         credential_data = {
@@ -392,12 +523,29 @@ def api_new_transportation():
 
 @app.route("/query-connections", methods=["GET"])
 def api_query_connections():
+    """
+    Query active connections.
+
+    This endpoint retrieves the active connections and returns the result as JSON.
+
+    Returns:
+        JSON response with the list of active connections.
+    """
     result = query_active_connections(auth_token=AUTH_TOKEN, url=API_URL)
     return jsonify(result)
 
 
 @app.route("/query-messages", methods=["GET"])
 def api_query_messages():
+    """
+    Query messages for a specific connection.
+
+    This endpoint retrieves messages based on the connection ID and state (sent or received)
+    and returns the result as JSON.
+
+    Returns:
+        JSON response with the list of messages for the specified connection.
+    """
     connection_id = request.args.get("connection_id")
     state = request.args.get("state", "sent")
     result = query_messages(connection_id, state, auth_token=AUTH_TOKEN, url=API_URL)
@@ -406,6 +554,16 @@ def api_query_messages():
 
 @app.route("/send-message", methods=["GET", "POST"])
 def api_send_message():
+    """
+    Send a message to a specific connection.
+
+    If the request method is POST, it processes the form data to send a message
+    and returns the result as JSON. If the request method is GET, it renders the
+    send message page.
+
+    Returns:
+        JSON response with the result of the message sending or renders the send message page.
+    """
     if request.method == "POST":
         data = request.form
         result = send_message(
@@ -417,12 +575,30 @@ def api_send_message():
 
 @app.route("/check-status", methods=["GET"])
 def api_check_status():
+    """
+    Check the status of the server.
+
+    This endpoint retrieves the current status of the server and returns the result as JSON.
+
+    Returns:
+        JSON response with the server status.
+    """
     result = check_status(auth_token=AUTH_TOKEN, url=API_URL)
     return jsonify(result)
 
 
 @app.route("/fetch-credential-records", methods=["GET", "POST"])
 def api_fetch_credential_records():
+    """
+    Fetch credential records for a specific connection.
+
+    If the request method is POST, it retrieves the credential records for the specified
+    connection ID and formats them for rendering. If the request method is GET, it renders
+    the fetch credential records page.
+
+    Returns:
+        JSON response with the formatted credential records or renders the fetch credential records page.
+    """
     credentials = []  # Initialize an empty list to avoid 'NoneType' errors
     if request.method == "POST":
         data = request.form
@@ -454,6 +630,16 @@ def api_fetch_credential_records():
 
 @app.route("/product-trace", methods=["GET", "POST"])
 def api_product_trace():
+    """
+    Trace a product based on its ID.
+
+    If the request method is POST, it retrieves the credential records for the specified
+    connection ID, filters them by product ID, and returns the result as JSON. If the
+    request method is GET, it renders the product trace page.
+
+    Returns:
+        JSON response with the filtered product trace results or renders the product trace page.
+    """
     credentials = []  # Initialize an empty list to avoid 'NoneType' errors
     if request.method == "POST":
         data = request.form

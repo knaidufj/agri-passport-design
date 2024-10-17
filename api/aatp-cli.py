@@ -1,6 +1,5 @@
 import argparse
 import json
-import os
 
 from config import AUTH_TOKEN, API_URL
 from schema import (
@@ -37,6 +36,11 @@ from server import check_status, interactive_check_status
 
 
 def main():
+    """
+    Main function to parse command line arguments and execute the appropriate action
+    based on user input or provided arguments. It sets up the argument parser for
+    various actions related to the Australian Agricultural Traceability Protocol.
+    """
     parser = argparse.ArgumentParser(
         description="A command line utility for demonstrating Australian Agricultural Traceability Protocol."
     )

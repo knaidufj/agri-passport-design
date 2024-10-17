@@ -1,0 +1,4 @@
+{
+  "schema_name": "AATP_UserSchema",
+  "attributes": ["user_id", "name", "email"]
+}
