@@ -331,12 +331,6 @@ def api_new_transportation():
             "credential_preview": {
                 "@type": "issue-credential/2.0/credential-preview",
                 "attributes": [
-                    {
-                        "name": "shipment_id",
-                        "value": str(
-                            hashlib.sha256((data["product_id"] + str(random.randint(0, 1000000))).encode()).hexdigest()
-                        )[:6],
-                    },
                     {"name": "product_id", "value": data["product_id"]},
                     {"name": "origin_location", "value": data["origin_location"]},
                     {"name": "destination_location", "value": data["destination_location"]},
@@ -350,7 +344,7 @@ def api_new_transportation():
                     "issuer_did": "13ZM7KEfAzLC12q1R1SiTS",
                     "schema_id": "13ZM7KEfAzLC12q1R1SiTS:2:AATP_TransportationSchema:1.1",
                     "schema_name": "AATP_TransportationSchema",
-                    "schema_version": "1.0",
+                    "schema_version": "1.1",
                 }
             },
             "trace": True,
