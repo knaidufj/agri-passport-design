@@ -42,7 +42,9 @@ def main():
     various actions related to the Australian Agricultural Traceability Protocol.
     """
     parser = argparse.ArgumentParser(
-        description="A command line utility for demonstrating Australian Agricultural Traceability Protocol."
+        description=("A command line utility for demonstrating backend functionality for the WIP Australian Agricultural Traceability Protocol to interact with ACA-PY compatible agents. "
+                     "Developed by Gaurav Singh, Arpita Dhar, Prathap Reddy K under the supervision of Dr. Tony Lenko and Dr. Paul Ashley as part of the academic project done at Griffith University (2024). "
+                     "Additional acknowledgement: Dr. Elizabeth Chang.")
     )
 
     # Main options
@@ -80,6 +82,7 @@ def main():
         required=True,
         help="List of attributes for the schema.",
     )
+    parser_schema.description = "This command allows you to create a new schema with a specified name, version, and attributes."
 
     # Get schema sub-parser
     parser_get_schema = subparsers.add_parser(
@@ -88,6 +91,7 @@ def main():
     parser_get_schema.add_argument(
         "--schema-id", type=str, required=True, help="ID of the schema to retrieve."
     )
+    parser_get_schema.description = "This command retrieves an existing schema using its unique identifier."
 
     # Get credential definition sub-parser
     parser_get_cred_def = subparsers.add_parser(
@@ -99,6 +103,7 @@ def main():
         required=True,
         help="ID of the credential definition to retrieve.",
     )
+    parser_get_cred_def.description = "This command retrieves a credential definition using its unique identifier."
 
     # Create credential definition sub-parser
     parser_cred_def = subparsers.add_parser(
@@ -118,6 +123,7 @@ def main():
         action="store_true",
         help="Enable support for revocation in credential definition.",
     )
+    parser_cred_def.description = "This command creates a new credential definition associated with a specified schema ID and tag, with an option to support revocation."
 
     # Create invitation sub-parser
     parser_invitation = subparsers.add_parser(
@@ -135,6 +141,7 @@ def main():
     parser_invitation.add_argument(
         "--multi-use", action="store_true", help="Allow multiple use of the invitation."
     )
+    parser_invitation.description = "This command creates a new connection invitation with options for aliasing, auto-acceptance, and usage."
 
     # Send proposal sub-parser
     parser_send_proposal = subparsers.add_parser(
@@ -181,6 +188,7 @@ def main():
         required=True,
         help="Verification method for the proposal.",
     )
+    parser_send_proposal.description = "This command sends a credential proposal with options for auto-removal, comments, and credential previews."
 
     # Request W3C credential sub-parser
     parser_request_w3c = subparsers.add_parser(
@@ -192,6 +200,7 @@ def main():
         required=True,
         help="JSON string containing the credential data.",
     )
+    parser_request_w3c.description = "This command requests a W3C credential by providing the necessary credential data in JSON format."
 
     # Fetch credential records sub-parser
     parser_fetch_cred_records = subparsers.add_parser(
@@ -203,11 +212,13 @@ def main():
         required=True,
         help="Connection ID to fetch credential records for.",
     )
+    parser_fetch_cred_records.description = "This command fetches credential records associated with a specific connection ID."
 
     # Query active connections sub-parser
     parser_connections = subparsers.add_parser(
         "query-connections", help="Query active connections"
     )
+    parser_connections.description = "This command queries the active connections available."
 
     # Query messages sub-parser
     parser_query_messages = subparsers.add_parser(
@@ -225,6 +236,7 @@ def main():
         default="sent",
         help="State of messages to query (sent/received).",
     )
+    parser_query_messages.description = "This command queries messages for a specific connection, allowing filtering by message state."
 
     # Send message sub-parser
     parser_send_message = subparsers.add_parser(
@@ -239,11 +251,13 @@ def main():
     parser_send_message.add_argument(
         "--content", type=str, required=True, help="Content of the message to send."
     )
+    parser_send_message.description = "This command sends a message to a specified connection ID with the provided content."
 
     # Check status sub-parser
     parser_check_status = subparsers.add_parser(
         "check-status", help="Check the status of the service"
     )
+    parser_check_status.description = "This command checks the current status of the service."
 
     args = parser.parse_args()
 
