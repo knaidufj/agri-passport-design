@@ -210,7 +210,14 @@ def api_new_certification():
                     {
                         "name": "certification_id",
                         "value": str(
-                            hashlib.sha256((data["producer_id"] + data["certification_date"] + data["certification_authority_id"] + str(random.randint(0, 1000000))).encode()).hexdigest()
+                            hashlib.sha256(
+                                (
+                                    data["producer_id"]
+                                    + data["certification_date"]
+                                    + data["certification_authority_id"]
+                                    + str(random.randint(0, 1000000))
+                                ).encode()
+                            ).hexdigest()
                         )[:6],
                     },
                     {"name": "producer_id", "value": data["producer_id"]},
@@ -241,6 +248,7 @@ def api_new_certification():
         return jsonify(result)
     return render_template("new_certification.html")
 
+
 @app.route("/new-product", methods=["GET", "POST"])
 def api_new_product():
     if request.method == "POST":
@@ -253,13 +261,18 @@ def api_new_product():
                     {
                         "name": "product_id",
                         "value": str(
-                            hashlib.sha256((data["producer_id"] + str(random.randint(0, 1000000))).encode()).hexdigest()
+                            hashlib.sha256(
+                                (
+                                    data["producer_id"]
+                                    + str(random.randint(0, 1000000))
+                                ).encode()
+                            ).hexdigest()
                         )[:6],
                     },
                     {"name": "product_name", "value": data["product_name"]},
                     {"name": "producer_id", "value": data["producer_id"]},
                     {"name": "production_date", "value": data["production_date"]},
-                    {"name": "expiration_date", "value": data["expiration_date"]}
+                    {"name": "expiration_date", "value": data["expiration_date"]},
                 ],
             },
             "filter": {
@@ -281,6 +294,7 @@ def api_new_product():
         return jsonify(result)
     return render_template("new_product.html")
 
+
 @app.route("/new-packaging", methods=["GET", "POST"])
 def api_new_packaging():
     if request.method == "POST":
@@ -293,14 +307,25 @@ def api_new_packaging():
                     {
                         "name": "packaging_id",
                         "value": str(
-                            hashlib.sha256((data["producer_id"] + str(random.randint(0, 1000000))).encode()).hexdigest()
+                            hashlib.sha256(
+                                (
+                                    data["producer_id"]
+                                    + str(random.randint(0, 1000000))
+                                ).encode()
+                            ).hexdigest()
                         )[:6],
                     },
                     {"name": "product_id", "value": data["product_id"]},
                     {"name": "packaging_date", "value": data["packaging_date"]},
-                    {"name": "packaging_facility_id", "value": data["packaging_facility_id"]},
-                    {"name": "packaging_conditions", "value": data["packaging_conditions"]},
-                    {"name": "batch_number", "value": data["batch_number"]}
+                    {
+                        "name": "packaging_facility_id",
+                        "value": data["packaging_facility_id"],
+                    },
+                    {
+                        "name": "packaging_conditions",
+                        "value": data["packaging_conditions"],
+                    },
+                    {"name": "batch_number", "value": data["batch_number"]},
                 ],
             },
             "filter": {
@@ -322,6 +347,7 @@ def api_new_packaging():
         return jsonify(result)
     return render_template("new_packaging.html")
 
+
 @app.route("/new-transportation", methods=["GET", "POST"])
 def api_new_transportation():
     if request.method == "POST":
@@ -333,9 +359,15 @@ def api_new_transportation():
                 "attributes": [
                     {"name": "product_id", "value": data["product_id"]},
                     {"name": "origin_location", "value": data["origin_location"]},
-                    {"name": "destination_location", "value": data["destination_location"]},
+                    {
+                        "name": "destination_location",
+                        "value": data["destination_location"],
+                    },
                     {"name": "shipment_date", "value": data["shipment_date"]},
-                    {"name": "transport_conditions", "value": data["transport_conditions"]}
+                    {
+                        "name": "transport_conditions",
+                        "value": data["transport_conditions"],
+                    },
                 ],
             },
             "filter": {
@@ -356,6 +388,7 @@ def api_new_transportation():
         )
         return jsonify(result)
     return render_template("new_transportation.html")
+
 
 @app.route("/query-connections", methods=["GET"])
 def api_query_connections():
@@ -417,6 +450,49 @@ def api_fetch_credential_records():
         return render_template("fetch_credential_records.html", credentials=result)
 
     return render_template("fetch_credential_records.html", credentials=credentials)
+
+
+@app.route("/product-trace", methods=["GET", "POST"])
+def api_product_trace():
+    credentials = []  # Initialize an empty list to avoid 'NoneType' errors
+    if request.method == "POST":
+        data = request.form
+        credentials = fetch_credential_records(
+            data["connection_id"], auth_token=AUTH_TOKEN, url=API_URL
+        )
+
+        # Format credentials as needed for rendering
+        credentials = credentials.get("results", [])
+        result = []
+        for credential in credentials:
+            cred_ex_record = credential["cred_ex_record"]
+            cred_preview = cred_ex_record["cred_preview"]["attributes"]
+            product_info = {attr["name"]: attr["value"] for attr in cred_preview}
+            result.append(
+                {
+                    "cred_ex_id": cred_ex_record["cred_ex_id"],
+                    "created_at": cred_ex_record["created_at"],
+                    "cred_preview": product_info,
+                    "cred_name": cred_ex_record["by_format"]["cred_offer"]["indy"][
+                        "cred_def_id"
+                    ].split(":")[-1],
+                }
+            )
+
+        # Only filter the entries which contain the product_id
+        product_id = data.get("product_id", "").strip()
+
+        # Let's filter the result to only include the product_id. Use direct access instead of json.dumps
+        result_json = [
+            credential
+            for credential in result
+            if "product_id" in credential["cred_preview"]
+            and credential["cred_preview"]["product_id"] == product_id
+        ]
+
+        return render_template("product_trace.html", credentials=result_json)
+
+    return render_template("product_trace.html", credentials=credentials)
 
 
 if __name__ == "__main__":

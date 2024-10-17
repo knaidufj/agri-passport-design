@@ -51,4 +51,3 @@ Sequence 6: Consumer scans QR code to trace a product
 - Consumer scans the QR code on the product
 - AATP_UI is invoked at 127.0.0.1:5000/product-trace
 - AATP_UI displays the product's journey from production to packaging to transportation to retailer
-

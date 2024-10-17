@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Trace</title>
+</head>
+<body>
+    <h1>Product Trace</h1>
+    <form method="POST">
+        <label for="connection_id">Connection ID:</label>
+        <input type="text" id="connection_id" name="connection_id" required><br><br>
+        <label for="product_id">Product ID:</label>
+        <input type="text" id="product_id" name="product_id" required><br><br>
+        <button type="submit">Fetch Product Trace</button>
+    </form>
+    {% if credentials %}
+    <table border="1">
+        <thead>
+            <tr>
+                <th>Credential Exchange ID</th>
+                <th>Created At</th>
+                <th>Credential Preview</th>
+                <th>Credential Name</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for credential in credentials %}
+            <tr>
+                <td>{{ credential.cred_ex_id }}</td>
+                <td>{{ credential.created_at }}</td>
+                <td>{{ credential.cred_preview }}</td>
+                <td>{{ credential.cred_name }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    {% else %}
+    <p>No credentials found.</p>
+    {% endif %}
+</body>
+</html>
