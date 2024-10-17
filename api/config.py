@@ -1,0 +1,2 @@
+API_URL = "https://traction-sandbox-tenant-proxy.apps.silver.devops.gov.bc.ca"
+AUTH_TOKEN = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ3YWxsZXRfaWQiOiIyYzA4MDE0MC0yYzVkLTRkMTAtOWE0YS00NzUwZmU5YTc2ODkiLCJpYXQiOjE3MjkwODY1OTksImV4cCI6MTcyOTE3Mjk5OX0.XSo5Fn19F8xRhWk-aaMpAPjcJZ3hitLJHgmfpNY5OdQ"
