@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Send Proposal</title>
+</head>
+<body>
+    <h1>Send Proposal</h1>
+    <form method="POST">
+        <label for="auto_remove">Auto Remove:</label>
+        <input type="checkbox" id="auto_remove" name="auto_remove"><br><br>
+        
+        <label for="comment">Comment:</label>
+        <input type="text" id="comment" name="comment"><br><br>
+        
+        <label for="connection_id">Connection ID:</label>
+        <input type="text" id="connection_id" name="connection_id" required><br><br>
+        
+        <label for="credential_preview">Credential Preview:</label>
+        <textarea id="credential_preview" name="credential_preview" required></textarea><br><br>
+        
+        <label for="filter">Filter:</label>
+        <textarea id="filter" name="filter" required></textarea><br><br>
+        
+        <label for="replacement_id">Replacement ID:</label>
+        <input type="text" id="replacement_id" name="replacement_id"><br><br>
+        
+        <label for="trace">Trace:</label>
+        <input type="checkbox" id="trace" name="trace"><br><br>
+        
+        <label for="verification_method">Verification Method:</label>
+        <input type="text" id="verification_method" name="verification_method"><br><br>
+        
+        <input type="submit" value="Send Proposal">
+    </form>
+</body>
+</html>
