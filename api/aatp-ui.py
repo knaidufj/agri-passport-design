@@ -6,6 +6,8 @@ from credential import get_credential_definition, create_credential_definition, 
 from messages import send_message, query_messages
 from server import check_status
 import json
+import random
+import hashlib
 
 app = Flask(__name__)
 
@@ -27,7 +29,7 @@ def api_create_schema():
         return jsonify(result)
     return render_template('create_schema.html')
 
-@app.route('/get-schema', methods=['GET'])
+@app.route('/get-schema', methods=['GET', 'POST'])
 def api_get_schema():
     if request.method == 'GET':
         schema_id = request.args.get('schema_id')
@@ -35,7 +37,7 @@ def api_get_schema():
         return jsonify(result)
     return render_template('get_schema.html')
 
-@app.route('/get-cred-def', methods=['GET'])
+@app.route('/get-cred-def', methods=['GET', 'POST'])
 def api_get_cred_def():
     if request.method == 'GET':
         cred_def_id = request.args.get('credential_definition_id')
@@ -98,6 +100,86 @@ def api_issue_credential():
         result = issue_credential(data['credential_data'], auth_token=AUTH_TOKEN, url=API_URL)
         return jsonify(result)
     return render_template('issue_credential.html')
+
+@app.route('/new-user', methods=['GET', 'POST'])
+def api_new_user():
+    if request.method == 'POST':
+        data = request.form
+        credential_data = {
+            "connection_id": data['connection_id'],
+            "credential_preview": {
+                "@type": "issue-credential/2.0/credential-preview",
+                "attributes": [
+                    {
+                        "name": "user_id",
+                        "value": str(hashlib.sha256(data['email'].encode()).hexdigest())[:6]
+                    },
+                    {
+                        "name": "name",
+                        "value": data['name']
+                    },
+                    {
+                        "name": "email",
+                        "value": data['email']
+                    }
+                ]
+            },
+            "filter": {
+                "indy": {
+                    "cred_def_id": "13ZM7KEfAzLC12q1R1SiTS:3:CL:2308153:User",
+                    "issuer_did": "13ZM7KEfAzLC12q1R1SiTS",
+                    "schema_id": "13ZM7KEfAzLC12q1R1SiTS:2:AATP_UserSchema:1.0",
+                    "schema_name": "AATP_UserSchema",
+                    "schema_version": "1.0"
+                }
+            },
+            "trace": True
+        }
+        # Convert credential_data to JSON string
+        credential_data_json = json.dumps(credential_data)  
+        result = issue_credential(credential_data_json, auth_token=AUTH_TOKEN, url=API_URL)
+        return jsonify(result)
+    return render_template('new_user.html')
+
+@app.route('/new-producer', methods=['GET', 'POST'])
+def api_new_producer():
+    if request.method == 'POST':
+        data = request.form
+        credential_data = {
+            "connection_id": data['connection_id'],
+            "credential_preview": {
+                "@type": "issue-credential/2.0/credential-preview",
+                "attributes": [
+                    {
+                        "name": "producer_id",
+                        "value": str(hashlib.sha256(data['user_id'].encode()).hexdigest())[:6]
+                    },
+                    {
+                        "name": "user_id",
+                        "value": data['user_id']
+                    },
+                    {
+                        "name": "organization_type",
+                        "value": data['organization_type']
+                    }
+                ]
+            },
+            "filter": {
+                "indy": {
+                    "cred_def_id": "13ZM7KEfAzLC12q1R1SiTS:3:CL:2308155:Producer",
+                    "issuer_did": "13ZM7KEfAzLC12q1R1SiTS",
+                    "schema_id": "13ZM7KEfAzLC12q1R1SiTS:2:AATP_ProducerSchema:1.1",
+                    "schema_name": "AATP_ProducerSchema",
+                    "schema_version": "1.1"
+                }
+            },
+            "trace": True
+        }
+        # Convert credential_data to JSON string
+        credential_data_json = json.dumps(credential_data)  
+        result = issue_credential(credential_data_json, auth_token=AUTH_TOKEN, url=API_URL)
+        return jsonify(result)
+    return render_template('new_producer.html')
 
 @app.route('/query-connections', methods=['GET'])
 def api_query_connections():

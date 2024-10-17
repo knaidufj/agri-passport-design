@@ -1,5 +1,6 @@
 import argparse
 import json
+import os
 
 from config import AUTH_TOKEN, API_URL
 from schema import (
@@ -19,12 +20,10 @@ from credential import (
     create_credential_definition,
     issue_credential,
     send_proposal,
-    create_offer,
     interactive_get_credential_definition,
     interactive_create_credential_definition,
     interactive_issue_credential,
     interactive_send_proposal,
-    interactive_create_offer
 )
 from messages import (
     send_message,
@@ -131,17 +130,6 @@ def main():
         "--multi-use", action="store_true", help="Allow multiple use of the invitation."
     )
 
-    # Create offer sub-parser
-    parser_create_offer = subparsers.add_parser(
-        "create-offer", help="Create a new offer"
-    )
-    parser_create_offer.add_argument(
-        "--offer-data",
-        type=json.loads,
-        required=True,
-        help="JSON string of the offer data.",
-    )
-
     # Send proposal sub-parser
     parser_send_proposal = subparsers.add_parser(
         "send-proposal", help="Send a credential proposal"
@@ -193,10 +181,10 @@ def main():
         "issue-credential", help="Request a W3C credential"
     )
     parser_request_w3c.add_argument(
-        "--credential-data-path",
+        "--credential-data",
         type=str,
         required=True,
-        help="Path to the JSON file containing the credential data.",
+        help="JSON string containing the credential data.",
     )
 
     # Query active connections sub-parser
@@ -254,7 +242,6 @@ def main():
         "9": interactive_query_messages,
         "10": interactive_send_message,
         "11": interactive_check_status,
-        "12": interactive_create_offer,
     }
 
     if args.interactive:
@@ -271,7 +258,6 @@ def main():
             "9. Query Messages\n"
             "10. Send Message\n"
             "11. Check Status\n"
-            "12. Create Offer\n"
             "Please enter the action number: "
         ).lower()
 
@@ -280,7 +266,7 @@ def main():
             action_function()
         else:
             print(
-                "Invalid action. Please choose 'create-schema', 'get-schema', 'get-cred-def', 'create-cred-def', 'create-invitation', 'send-proposal', 'issue-credential', 'query-connections', 'query-messages', 'send-message', 'check-status', or 'create-offer'."
+                "Invalid action. Please choose 'create-schema', 'get-schema', 'get-cred-def', 'create-cred-def', 'create-invitation', 'send-proposal', 'issue-credential', 'query-connections', 'query-messages', 'send-message', or 'check-status'."
             )
     else:
         action_map = {
@@ -312,11 +298,6 @@ def main():
                 auth_token=args.auth_token,
                 url=args.url,
             ),
-            "create-offer": lambda: create_offer(
-                args.offer_data,
-                auth_token=args.auth_token,
-                url=args.url,
-            ),
             "send-proposal": lambda: send_proposal(
                 args.auto_remove,
                 args.comment,
@@ -330,7 +311,7 @@ def main():
                 url=args.url,
             ),
             "issue-credential": lambda: issue_credential(
-                args.credential_data_path, auth_token=args.auth_token, url=args.url
+                args.credential_data, auth_token=args.auth_token, url=args.url
             ),
             "query-connections": lambda: query_active_connections(
                 auth_token=args.auth_token, url=args.url
@@ -369,8 +350,6 @@ if __name__ == "__main__":
 # python aatp.py create-cred-def --schema-id "VDbghfvE6dGvgA5dK9p1DC:2:agri_producer:1.0" --tag "AgriProducer4"
 # Create an invitation
 # python aatp.py create-invitation --alias "AgriProducer20" --multi-use
-# Create an offer
-# python aatp.py create-offer --offer-data '{"key": "value"}'
 # Send a proposal
 # python aatp.py send-proposal --auto-remove --comment "Proposing a membership credential" --connection-id "3fa85f64-5717-4562-b3fc-2c963f66afa6" --credential-preview '{"@type": "issue-credential/2.0/credential-preview", "attributes": [{"mime-type": "image/jpeg", "name": "favourite_drink", "value": "martini"}]}' --filter '{"indy": {"cred_def_id": "WgWxqztrNooG92RXvxSTWv:3:CL:20:tag", "issuer_did": "WgWxqztrNooG92RXvxSTWv", "schema_id": "WgWxqztrNooG92RXvxSTWv:2:schema_name:1.0", "schema_issuer_did": "WgWxqztrNooG92RXvxSTWv", "schema_name": "preferences", "schema_version": "1.0"}}' --replacement-id "3fa85f64-5717-4562-b3fc-2c963f66afa6" --trace --verification-method "string"
 # Request a W3C credential

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Producer</title>
+</head>
+<body>
+    <h1>Create New Producer</h1>
+    <form method="POST">
+        <label for="connection_id">Connection ID:</label>
+        <input type="text" id="connection_id" name="connection_id" value="f5f80243-cce2-4e90-9193-e8c039620e05"required><br><br>
+        
+        <label for="user_id">User ID:</label>
+        <input type="text" id="user_id" name="user_id" required><br><br>
+
+        <label for="organization_type">Organization Type:</label>
+        <select id="organization_type" name="organization_type" required>
+            <option value="">Select Organization Type</option>
+            <option value="farm">Farm</option>
+            <option value="cooperative">Cooperative</option>
+            <option value="agribusiness">Agribusiness</option>
+            <option value="non-profit">Non-Profit Organization</option>
+            <option value="government">Government Agency</option>
+            <option value="research">Research Institution</option>
+        </select><br><br>
+        
+        <input type="submit" value="Create New Producer">
+    </form>
+</body>
+</html>

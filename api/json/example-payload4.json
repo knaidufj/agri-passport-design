@@ -1,0 +1,68 @@
+{
+    "auto_issue": true,
+    "auto_remove": true,
+    "comment": "string",
+    "credential_preview": {
+      "@type": "issue-credential/2.0/credential-preview",
+      "attributes": [
+        {
+          "name": "familyName",
+          "value": "SMITH"
+        },
+        {
+          "name": "gender",
+          "value": "Male"
+        },
+        {
+          "name": "givenName",
+          "value": "JOHN"
+        },
+        {
+          "name": "residentSince",
+          "value": "2024-10-16"
+        }
+      ]
+    },
+    "filter": {
+      "indy": {
+        "cred_def_id": "13ZM7KEfAzLC12q1R1SiTS:3:CL:2298351:PermanentResidentCard1.1",
+        "issuer_did": "13ZM7KEfAzLC12q1R1SiTS",
+        "schema_id": "13ZM7KEfAzLC12q1R1SiTS:2:PermanentResidentCard:1.1",
+        "schema_issuer_did": "13ZM7KEfAzLC12q1R1SiTS",
+        "schema_name": "PermanentResidentCard",
+        "schema_version": "1.1"
+      },
+      "ld_proof": {
+        "credential": {
+          "@context": [
+            "https://www.w3.org/2018/credentials/v1",
+            "https://w3id.org/citizenship/v1"
+          ],
+          "credentialSubject": {
+            "familyName": "SMITH",
+            "gender": "Male",
+            "givenName": "JOHN",
+            "residentSince": "2024-10-16",
+            "type": [
+              "PermanentResident",
+              "Person"
+            ]
+          },
+          "description": "Government of Example Permanent Resident Card.",
+          "identifier": "83627465",
+          "issuanceDate": "2024-10-16T04:17:28.949661Z",
+          "issuer": "did:key:z6MkmjY8GnV5i9YTDtPETC2uUAW6ejw3nk5mXF5yci5ab7th",
+          "name": "Permanent Resident Card",
+          "type": [
+            "VerifiableCredential",
+            "PermanentResidentCard"
+          ]
+        },
+        "options": {
+          "proofType": "Ed25519Signature2018"
+        }
+      }
+    },
+    "replacement_id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "trace": true
+}

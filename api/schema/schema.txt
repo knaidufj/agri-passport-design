@@ -1,0 +1,81 @@
+## 1. AATP_UserSchema
+
+```json
+{
+  "schema_name": "AATP_UserSchema",
+  "attributes": ["user_id", "name", "email"]
+}
+```
+
+## 2. AATP_ProducerSchema
+
+```json
+{
+  "schema_name": "AATP_ProducerSchema",
+  "attributes": ["producer_id", "user_id", "organization_type"]
+}
+```
+
+## 3. AATP_ProductSchema
+
+```json
+{
+  "schema_name": "AATP_ProductSchema",
+  "attributes": ["product_id", "product_name", "producer_id", "production_date", "expiration_date"]
+}
+```
+
+## 4. AATP_CertifyingAuthoritySchema
+
+```json
+{
+  "schema_name": "AATP_CertifyingAuthoritySchema",
+  "attributes": ["authority_id", "user_id", "authority_type"]
+}
+```
+
+## 5. AATP_ConsumerSchema
+
+```json
+{
+  "schema_name": "AATP_ConsumerSchema",
+  "attributes": ["consumer_id", "user_id"]
+}
+```
+
+## 6. AATP_RetailerSchema
+
+```json
+{
+  "schema_name": "AATP_RetailerSchema",
+  "attributes": ["retailer_id", "user_id", "store_location"]
+}
+```
+
+## 7. AATP_PackagingSchema
+
+```json
+{
+  "schema_name": "AATP_PackagingSchema",
+  "attributes": ["packaging_id", "product_id", "packaging_date", "packaging_facility_id", "packaging_conditions", "batch_number"]
+}
+```
+
+## 8. AATP_TransportationSchema
+
+```json
+{
+  "schema_name": "AATP_TransportationSchema",
+  "attributes": ["shipment_id", "product_id", "origin_location", "destination_location", "shipment_date", "transport_conditions"]
+}
+```
+
+## 9. AATP_RecallSchema
+
+```json
+{
+  "schema_name": "AATP_RecallSchema",
+  "attributes": ["recall_id", "recall_reason", "affected_product_id", "recall_date", "issuer_id"]
+}
+```
+```

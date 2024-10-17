@@ -1,0 +1,48 @@
+{
+    "credential": {
+      "@context": [
+        "https://www.w3.org/2018/credentials/v1",
+        "https://www.w3.org/2018/credentials/examples/v1"
+      ],
+      "credentialStatus": {
+        "id": "https://example.com/credentials/status/3#94567",
+        "statusListCredential": "https://example.com/credentials/status/3",
+        "statusListIndex": "94567",
+        "statusPurpose": "revocation",
+        "type": "BitstringStatusListEntry"
+      },
+      "credentialSubject": {
+        "familyName": "SMITH",
+        "gender": "Male",
+        "givenName": "JOHN",
+        "residentSince": "2024-10-16",
+        "id": "did:example:ebfeb1f712ebc6f1c276e12ec21"
+      },
+      "expirationDate": "2024-10-16T19:23:24Z",
+      "id": "http://example.edu/credentials/13ZM7KEfAzLC12q1R1SiTS:3:CL:2298351:PermanentResidentCard1.1",
+      "issuanceDate": "2024-10-16T19:23:24Z",
+      "issuer": "3ZM7KEfAzLC12q1R1SiTS",
+      "proof": {
+        "created": "2024-10-16T03:50:55Z",
+        "jws": "eyJhbGciOiAiRWREU0EiLCAiYjY0IjogZmFsc2UsICJjcml0JiNjQiXX0..lKJU0Df_keblRKhZAS9Qq6zybm-HqUXNVZ8vgEPNTAjQKBhQDxvXNo7nvtUBb_Eq1Ch6YBKY5qBQ",
+        "proofPurpose": "assertionMethod",
+        "type": "Ed25519Signature2018",
+        "verificationMethod": "did:key:z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL#z6Mkgg342Ycpuk263R9d8Aq6MUaxPn1DDeHyGo38EefXmgDL"
+      },
+      "type": [
+        "VerifiableCredential",
+        "PermanentResidentCard"
+      ]
+    },
+    "options": {
+      "challenge": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+      "created": "2024-10-16T23:59:59Z",
+      "credentialStatus": {
+        "type": "CredentialStatusList2017"
+      },
+      "domain": "example.com",
+      "proofPurpose": "assertionMethod",
+      "proofType": "Ed25519Signature2018",
+      "verificationMethod": "did:example:123456#key-1"
+    }
+  }

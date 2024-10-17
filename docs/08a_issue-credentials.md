@@ -5,8 +5,8 @@
 - Producer
 - Issuer
 
-## **Create DIDs
-Generate Decentralized Identifiers (DIDs) for both issuer and producer. Register these DIDs on the appropriate network or ledger.
+## Create Schema and Credential Definition for Producer and Issuer
+
 
 ## Credential Definition and Schema
 Define a credential schema on the ledger for the type of certification, ensuring compliance with the W3C VC Data Model.
