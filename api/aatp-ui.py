@@ -61,7 +61,7 @@ def api_get_schema():
     Returns:
         JSON response with the schema details or renders the get schema page.
     """
-    if request.method == "GET":
+    if request.method == "GET" and request.args.get("schema_id"):
         schema_id = request.args.get("schema_id")
         result = get_schema(schema_id, auth_token=AUTH_TOKEN, url=API_URL)
         return jsonify(result)
@@ -80,12 +80,13 @@ def api_get_cred_def():
     Returns:
         JSON response with the credential definition details or renders the get credential definition page.
     """
-    if request.method == "GET":
-        cred_def_id = request.args.get("credential_definition_id")
-        result = get_credential_definition(
-            cred_def_id, auth_token=AUTH_TOKEN, url=API_URL
-        )
-        return jsonify(result)
+    cred_def_id = request.args.get("credential_definition_id")
+    if cred_def_id:
+        try:
+            result = get_credential_definition(cred_def_id, auth_token=AUTH_TOKEN, url=API_URL)
+            return jsonify(result)
+        except Exception as e:
+            return f"Error retrieving credential definition: {e}", 400
     return render_template("get_cred_def.html")
 
 
